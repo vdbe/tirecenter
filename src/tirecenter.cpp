@@ -129,9 +129,8 @@ void TireCenter::runAction(Action action) {
     this->actionDeleteCustomer();
     break;
   case Action::exitMenu:
-    // Schould be handled after TireCenter::chooseAction and before
-    // this->runAction
-    exit(1);
+    // Do nothing
+    return;
     break;
   default:
     // TODO: Error handling

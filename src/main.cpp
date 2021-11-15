@@ -8,17 +8,15 @@ void fill(TireCenter *, int);
 
 int main() {
   TireCenter tc;
-  fill(&tc, 20);
-
-  // tc.test();
-
-  // return 0;
   Action action;
-  UserType user = TireCenter::getUserType();
 
-  while ((action = TireCenter::chooseAction(user)) != Action::exitMenu) {
+  fill(&tc, 20);
+  const UserType user = TireCenter::getUserType();
+
+  do {
+    action = TireCenter::chooseAction(user);
     tc.runAction(action);
-  }
+  } while (action != Action::exitMenu);
 
   return 0;
 }

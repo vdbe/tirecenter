@@ -70,7 +70,7 @@ void deleteFromVec(std::vector<T> *p_vec, SearchResult<T> searchResult,
   std::cin >> c;
   cleanStdin();
 
-  if (c == 'n')
+  if (c != 'y')
     return;
 
   // Delete element
@@ -80,6 +80,7 @@ template void deleteFromVec(std::vector<Customer> *, SearchResult<Customer>,
                             void (Customer::*)(void));
 template void deleteFromVec(std::vector<Article> *, SearchResult<Article>,
                             void (Article::*)(void));
+
 Menu::Menu(std::vector<std::string> options)
     : options(options), maxOptions(DEFAULT_MAX_OPTIONS){};
 
