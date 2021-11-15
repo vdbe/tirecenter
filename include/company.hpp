@@ -2,14 +2,14 @@
 #include <string>
 
 class Company {
-	private:
-		std::string vat;
-		int volumeDiscount;
+private:
+  std::string vat;
+  int volumeDiscount;
 
-	public:
-		std::string getVAT(void);
-		void setVAT(std::string);
+public:
+  std::string getVAT(void);
+  void setVAT(std::string);
 
-		int getVolumeDiscount(void);
-		void setVolumeDiscount(int);
+  int getVolumeDiscount(void);
+  void setVolumeDiscount(int);
 };

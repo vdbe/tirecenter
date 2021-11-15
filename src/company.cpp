@@ -1,21 +1,11 @@
 #include "company.hpp"
 
-std::string Company::getVAT(void)
-{
-	return this->vat;
-}
+std::string Company::getVAT(void) { return this->vat; }
 
-void Company::setVAT(std::string vat)
-{
-	this->vat = vat;
-}
+void Company::setVAT(std::string vat) { this->vat = vat; }
 
-int Company::getVolumeDiscount(void)
-{
-	return this->volumeDiscount;
-}
+int Company::getVolumeDiscount(void) { return this->volumeDiscount; }
 
-void Company::setVolumeDiscount(int volumeDiscount)
-{
-	this->volumeDiscount = volumeDiscount;
+void Company::setVolumeDiscount(int volumeDiscount) {
+  this->volumeDiscount = volumeDiscount;
 }
