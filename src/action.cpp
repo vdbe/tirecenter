@@ -104,7 +104,7 @@ void actionChangeArticle(std::vector<Article> &articles) {
 
   std::string line;
 
-  searchResult = search(&articles, &Article::getName);
+  searchResult = search(articles, &Article::getName);
   p_article = searchResult.ptr;
 
   std::cout << "Leave blank if old value is correct" << std::endl;
@@ -171,14 +171,14 @@ void actionPlaceOrder(std::vector<Article> &articles,
   SearchResult<Customer> customerSearch;
   SearchResult<Article> articleSearch;
 
-  customerSearch = search(&customers, &Customer::getName);
+  customerSearch = search(customers, &Customer::getName);
   invoice.setCustomer(*customerSearch.ptr);
 
   do {
     int stock;
     int amount = 0;
 
-    articleSearch = search(&articles, &Article::getName);
+    articleSearch = search(articles, &Article::getName);
 
     Article article = *articleSearch.ptr;
 
@@ -216,7 +216,7 @@ void actionChangeCustomer(std::vector<Customer> &customers) {
 
   std::string line;
 
-  searchResult = search(&customers, &Customer::getName);
+  searchResult = search(customers, &Customer::getName);
   p_customer = searchResult.ptr;
 
   std::cout << "Leave blank if old value is correct" << std::endl;
@@ -273,7 +273,7 @@ void actionUpdateStock(std::vector<Article> &articles) {
 
   std::string line;
 
-  searchResult = search(&articles, &Article::getName);
+  searchResult = search(articles, &Article::getName);
   p_article = searchResult.ptr;
 
   std::cout << "Leave blank if old value is correct" << std::endl;
@@ -327,13 +327,13 @@ void actionAddArticle(std::vector<Article> &articles) {
 void actionDeleteArticle(std::vector<Article> &articles) {
   SearchResult<Article> searchResult;
 
-  searchResult = search(&articles, &Article::getName);
-  deleteFromVec(&articles, searchResult, &Article::show);
+  searchResult = search(articles, &Article::getName);
+  deleteFromVec(articles, searchResult, &Article::show);
 }
 
 void actionDeleteCustomer(std::vector<Customer> &customers) {
   SearchResult<Customer> searchResult;
 
-  searchResult = search(&customers, &Customer::getName);
-  deleteFromVec(&customers, searchResult, &Customer::show);
+  searchResult = search(customers, &Customer::getName);
+  deleteFromVec(customers, searchResult, &Customer::show);
 }

@@ -34,31 +34,30 @@ void cleanStdin(void) {
 }
 
 template <typename T>
-SearchResult<T> search(std::vector<T> *p_vec,
-                       std::string (T::*getString)(void)) {
+SearchResult<T> search(std::vector<T> &vec, std::string (T::*getString)(void)) {
   SearchResult<T> searchResult;
-  unsigned int size = p_vec->size();
+  unsigned int size = vec.size();
 
-  std::vector<std::string> options(p_vec->size());
+  std::vector<std::string> options(size);
   for (unsigned int ii = 0; ii < size; ii++) {
-    T *item = (p_vec->data() + ii);
+    T *item = (vec.data() + ii);
     options[ii] = (item->*getString)();
   }
 
   // Show options
   Menu menu(options);
   searchResult.index = menu.run();
-  searchResult.ptr = p_vec->data() + searchResult.index;
+  searchResult.ptr = vec.data() + searchResult.index;
 
   return searchResult;
 }
-template SearchResult<Customer> search(std::vector<Customer> *,
+template SearchResult<Customer> search(std::vector<Customer> &,
                                        std::string (Customer::*)(void));
-template SearchResult<Article> search(std::vector<Article> *,
+template SearchResult<Article> search(std::vector<Article> &,
                                       std::string (Article::*)(void));
 
 template <typename T>
-void deleteFromVec(std::vector<T> *p_vec, SearchResult<T> searchResult,
+void deleteFromVec(std::vector<T> &vec, SearchResult<T> searchResult,
                    void (T::*summary)(void)) {
   char c;
 
@@ -74,11 +73,11 @@ void deleteFromVec(std::vector<T> *p_vec, SearchResult<T> searchResult,
     return;
 
   // Delete element
-  p_vec->erase(p_vec->begin() + searchResult.index);
+  vec.erase(vec.begin() + searchResult.index);
 }
-template void deleteFromVec(std::vector<Customer> *, SearchResult<Customer>,
+template void deleteFromVec(std::vector<Customer> &, SearchResult<Customer>,
                             void (Customer::*)(void));
-template void deleteFromVec(std::vector<Article> *, SearchResult<Article>,
+template void deleteFromVec(std::vector<Article> &, SearchResult<Article>,
                             void (Article::*)(void));
 
 Menu::Menu(std::vector<std::string> options)

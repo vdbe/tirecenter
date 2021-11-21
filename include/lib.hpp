@@ -20,10 +20,10 @@ bool stringIsInt(const std::string &);
 bool stringIsFloat(const std::string &);
 
 template <typename T>
-SearchResult<T> search(std::vector<T> *, std::string (T::*)(void));
+SearchResult<T> search(std::vector<T> &, std::string (T::*)(void));
 
 template <typename T>
-void deleteFromVec(std::vector<T> *, SearchResult<T>, void (T::*)(void));
+void deleteFromVec(std::vector<T> &, SearchResult<T>, void (T::*)(void));
 
 class Menu {
 private:
