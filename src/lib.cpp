@@ -108,7 +108,7 @@ size_t choose(char *options[], size_t size, size_t max_options) {
   size_t page_len;
 
   std::string line;
-  size_t choice;
+  size_t choice = -1;
 
   if (max_options > size) {
     page_len = size;
@@ -158,5 +158,5 @@ size_t choose(char *options[], size_t size, size_t max_options) {
     }
   } while (choice >= page_len);
 
-  return choice;
+  return page * max_options + choice;
 }
