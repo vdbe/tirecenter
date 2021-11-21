@@ -25,13 +25,5 @@ SearchResult<T> search(std::vector<T> &, std::string (T::*)(void));
 template <typename T>
 void deleteFromVec(std::vector<T> &, SearchResult<T>, void (T::*)(void));
 
-class Menu {
-private:
-  std::vector<std::string> options;
-  unsigned int maxOptions;
-
-public:
-  Menu(std::vector<std::string>, unsigned int);
-  Menu(std::vector<std::string>);
-  unsigned int run(void);
-};
+size_t choose(char **, size_t, size_t);
+void _draw_page(char **, size_t);

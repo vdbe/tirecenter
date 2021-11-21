@@ -1,3 +1,4 @@
+#include <cstring>
 #include <iostream>
 #include <limits>
 #include <sstream>
@@ -37,18 +38,33 @@ template <typename T>
 SearchResult<T> search(std::vector<T> &vec, std::string (T::*getString)(void)) {
   SearchResult<T> searchResult;
   unsigned int size = vec.size();
+  char **options = NULL;
 
-  std::vector<std::string> options(size);
+  // Allocate memory for option pointers
+  options = (char **)malloc(size * sizeof(char **));
+  if (options == NULL)
+    exit(1);
+
   for (unsigned int ii = 0; ii < size; ii++) {
+    char *c = NULL;
     T *item = (vec.data() + ii);
-    options[ii] = (item->*getString)();
+    std::string s = (item->*getString)();
+
+    c = (char *)malloc(s.size() * sizeof(char *));
+    if (options == NULL)
+      exit(1);
+    stpcpy(c, s.c_str());
+
+    options[ii] = c;
   }
 
-  // Show options
-  Menu menu(options);
-  searchResult.index = menu.run();
+  searchResult.index = choose(options, size, 8);
   searchResult.ptr = vec.data() + searchResult.index;
 
+  for (unsigned int ii = 0; ii < size; ii++) {
+    free(options[ii]);
+  }
+  free(options);
   return searchResult;
 }
 template SearchResult<Customer> search(std::vector<Customer> &,
@@ -80,60 +96,53 @@ template void deleteFromVec(std::vector<Customer> &, SearchResult<Customer>,
 template void deleteFromVec(std::vector<Article> &, SearchResult<Article>,
                             void (Article::*)(void));
 
-Menu::Menu(std::vector<std::string> options)
-    : options(options), maxOptions(DEFAULT_MAX_OPTIONS){};
+void _draw_page(char *options[], size_t size) {
+  for (size_t ii = 0; ii < size; ii++) {
+    std::cout << ii + 1 << ". " << options[ii] << std::endl;
+  }
+}
 
-Menu::Menu(std::vector<std::string> options, unsigned int maxOptions)
-    : options(options), maxOptions(maxOptions) {}
+size_t choose(char *options[], size_t size, size_t max_options) {
+  size_t page = 0;
+  size_t max_page = size / max_options;
+  size_t page_len;
 
-// TODO: Improve this!!!
-unsigned int Menu::run(void) {
-  unsigned int choice;
-  unsigned int pagelen = 0;
-  unsigned int optionsCount = this->options.size();
-  unsigned int currentPage = 0;
-  unsigned maxPage = optionsCount / this->maxOptions;
   std::string line;
+  size_t choice;
 
-  if (this->maxOptions > optionsCount) {
-    pagelen = optionsCount;
-  } else if ((currentPage + 1) * this->maxOptions > optionsCount) {
-    pagelen = optionsCount % this->maxOptions;
+  if (max_options > size) {
+    page_len = size;
+  } else if ((page + 1) * max_options > size) {
+    page_len = size % max_options;
   } else {
-    pagelen = this->maxOptions;
+    page_len = max_options;
   }
 
+  // I know don't use `while(true) {...}`
   do {
-    for (unsigned int ii = 0; ii < pagelen; ii++) {
+    _draw_page((char **)(options + (page * max_options)), page_len);
 
-      std::cout << ii + 1 << ". "
-                << this->options[currentPage * this->maxOptions + ii]
-                << std::endl;
-    }
-
-    std::cout << "Choice[p " << currentPage + 1 << "/" << maxPage + 1 << "]: ";
+    std::cout << "Choice[p " << page + 1 << "/" << max_page + 1 << "]: ";
     std::getline(std::cin, line);
     std::cout << std::endl;
 
-    if (stringIsInt(line)) {
-      choice = std::stoi(line) - 1;
-    } else {
+    if (stringIsInt(line) == false) {
       switch (line[0]) {
       case 'n':
-        if (currentPage < maxPage) {
-          currentPage++;
-          if ((currentPage + 1) * this->maxOptions >= optionsCount) {
-            pagelen = optionsCount % this->maxOptions;
+        if (page < max_page) {
+          page++;
+          if ((page + 1) * max_options >= size) {
+            page_len = size % max_options;
           } else {
-            pagelen = this->maxOptions;
+            page_len = max_options;
           }
         }
         continue;
         break;
       case 'p':
-        if (currentPage > 0) {
-          currentPage--;
-          pagelen = this->maxOptions;
+        if (page > 0) {
+          page--;
+          page_len = max_options;
         }
         continue;
       case '?':
@@ -144,8 +153,10 @@ unsigned int Menu::run(void) {
       default:
         break;
       }
+    } else {
+      choice = std::stoi(line) - 1;
     }
-  } while (choice >= pagelen);
+  } while (choice >= page_len);
 
-  return currentPage * this->maxOptions + choice;
+  return choice;
 }

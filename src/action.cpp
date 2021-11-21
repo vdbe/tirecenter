@@ -11,33 +11,39 @@
 Action chooseAction(UserType user) {
   Action action;
   int len = 6;
+  char **options = NULL;
 
   // Add options for owner
   if (user == UserType::owner) {
     len += 3;
   }
 
-  std::vector<std::string> options(len + 1);
+  // Allocate memory for option pointers
+  options = (char **)malloc((len + 1) * sizeof(char **));
+  // options = (char **)calloc(len, sizeof(char **));
+  if (options == NULL)
+    exit(1);
+
   for (int ii = 0; ii < len; ii++) {
-    options[ii] = ACTION_STRING[ii];
+    options[ii] = (char *)ACTION_STRING[ii];
   }
-  options[len] = ACTION_STRING[Action::exitMenu];
+  options[len] = (char *)ACTION_STRING[Action::exitMenu];
 
-  Menu menu(options);
-  action = (Action)menu.run();
+  action = (Action)choose(options, len + 1, 8);
 
+  free(options);
   return action;
 }
 
 UserType getUserType(void) {
   UserType user;
+  char *options[2];
+  size_t choice;
 
-  std::vector<std::string> options(2);
-  options[0] = USERTYPE_STRING[0];
-  options[1] = USERTYPE_STRING[1];
+  options[0] = (char *)USERTYPE_STRING[0];
+  options[1] = (char *)USERTYPE_STRING[1];
+  choice = choose((char **)options, (size_t)2, (size_t)8);
 
-  Menu menu(options);
-  int choice = menu.run();
   switch (choice) {
   case 0:
     user = UserType::owner;
