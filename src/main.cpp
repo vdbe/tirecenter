@@ -1,4 +1,6 @@
+#include "action.hpp"
 #include "article.hpp"
+#include "invoice.hpp"
 #include "tirecenter.hpp"
 
 #include <iostream>
@@ -10,12 +12,16 @@ int main() {
   TireCenter tc;
   Action action;
 
+  std::vector<Article> &articles = tc.getArticlesRef();
+  std::vector<Customer> &customers = tc.getCustomersRef();
+  std::vector<Invoice> &invoices = tc.getInvoicesRef();
+
   fill(&tc, 20);
-  const UserType user = TireCenter::getUserType();
+  const UserType user = getUserType();
 
   do {
-    action = TireCenter::chooseAction(user);
-    tc.runAction(action);
+    action = chooseAction(user);
+    runAction(action, articles, customers, invoices);
   } while (action != Action::exitMenu);
 
   return 0;
