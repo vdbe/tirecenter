@@ -14,8 +14,8 @@
 #
 
 CXX      ?= g++
-CXXFLAGS ?=  -std=c++20 -pedantic-errors -Wall -Wextra #-Werror
-LDFLAGS  ?= -L/usr/lib -lstdc++ -lm
+CXXFLAGS += -std=c++20 -pedantic-errors -Wall -Wextra #-Werror
+LDFLAGS  += -L/usr/lib -lstdc++ -lm
 BUILD    ?= ./build
 OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)
@@ -42,15 +42,15 @@ $(APP_DIR)/$(TARGET): $(OBJECTS)
 
 -include $(DEPENDENCIES)
 
-.PHONY: all build clean debug release info run
+.PHONY: all static clean debug release info run
 
 build:
 	@mkdir -p $(APP_DIR)
 	@mkdir -p $(OBJ_DIR)
 
+
 debug: CXXFLAGS += -DDEBUG -g3
 debug: all
-
 
 release: CXXFLAGS += -O2
 release: all
