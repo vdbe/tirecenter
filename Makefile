@@ -42,7 +42,7 @@ $(APP_DIR)/$(TARGET): $(OBJECTS)
 
 -include $(DEPENDENCIES)
 
-.PHONY: all static clean debug release info run
+.PHONY: all static clean debug release static docker info run gdb
 
 build:
 	@mkdir -p $(APP_DIR)
@@ -54,6 +54,14 @@ debug: all
 
 release: CXXFLAGS += -O2
 release: all
+
+static: LDFLAGS += -static
+static: release
+
+docker: build
+	docker build -t tirecenter .
+	@$(eval LAYER = $(shell docker save tirecenter  | tar xf - repositories  --to-stdout | sed -r --expression='s/.*\{.*\"tirecenter\":\{.*\"latest\":\"(.*)\".*}.*}.*/\1/'))
+	@docker save tirecenter  | tar xf - $(LAYER)/layer.tar --to-stdout | tar -C $(APP_DIR) -xf - tirecenter
 
 run: all
 	$(APP_DIR)/$(TARGET)

@@ -4,7 +4,7 @@ COPY Makefile /app
 COPY include /app/include
 COPY src /app/src
 WORKDIR /app
-RUN LDFLAGS=-static make release
+RUN make static
 
 FROM scratch
 COPY --from=build-env /app/build/tirecenter /tirecenter
