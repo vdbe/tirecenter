@@ -14,7 +14,7 @@
 #
 
 CXX      ?= g++
-CXXFLAGS += -std=c++20 -pedantic-errors -Wall -Wextra #-Werror
+CXXFLAGS += -std=c++2a -pedantic-errors -Wall -Wextra #-Werror
 LDFLAGS  += -L/usr/lib -lstdc++ -lm
 BUILD    ?= ./build
 OBJ_DIR  := $(BUILD)/objects
@@ -74,11 +74,13 @@ clean:
 	-@rm -rvf $(APP_DIR)/*
 
 info:
-	@echo "[*] Compiler:        ${CXX}         "
-	@echo "[*] Compiler flags:  ${CXXFLAGS}    "
 	@echo "[*] Linker flags:    ${LDFLAGS}     "
 	@echo "[*] Application dir: ${APP_DIR}     "
 	@echo "[*] Object dir:      ${OBJ_DIR}     "
 	@echo "[*] Sources:         ${SRC}         "
 	@echo "[*] Objects:         ${OBJECTS}     "
 	@echo "[*] Dependencies:    ${DEPENDENCIES}"
+	@echo "[*] Compiler flags:  ${CXXFLAGS}    "
+	@echo "[*] Compiler:        ${CXX}         "
+	@echo "[*] Combiler version:               "
+	@${CXX} --version
