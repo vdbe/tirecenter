@@ -7,6 +7,14 @@
 #include "invoice.hpp"
 #include "lib.hpp"
 
+inline const char *userTypeToCharArray(UserType userType) {
+  return USERTYPE_STRING[userType];
+}
+
+inline const char *actionToCharArray(Action action) {
+  return ACTION_STRING[action];
+}
+
 /* static functions */
 Action chooseAction(UserType user) {
   Action action;
@@ -27,7 +35,7 @@ Action chooseAction(UserType user) {
   for (int ii = 0; ii < len; ii++) {
     options[ii] = (char *)ACTION_STRING[ii];
   }
-  options[len] = (char *)ACTION_STRING[Action::exitMenu];
+  options[len] = (char *)actionToCharArray(Action::exitMenu);
 
   action = (Action)choose(options, len + 1, 8);
 
@@ -40,9 +48,9 @@ UserType getUserType(void) {
   char *options[2];
   size_t choice;
 
-  options[0] = (char *)USERTYPE_STRING[0];
-  options[1] = (char *)USERTYPE_STRING[1];
-  choice = choose((char **)options, (size_t)2, (size_t)8);
+  options[0] = (char *)userTypeToCharArray(UserType::employee);
+  options[1] = (char *)userTypeToCharArray(UserType::owner);
+  choice = choose((char **)options, 2, 8);
 
   switch (choice) {
   case 0:

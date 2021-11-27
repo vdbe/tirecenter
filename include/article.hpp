@@ -12,8 +12,6 @@ private:
   char type;
 
 public:
-  static void changeArticle(std::vector<Article>);
-
   std::string getName(void);
   void setName(std::string);
 

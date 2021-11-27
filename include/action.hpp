@@ -10,6 +10,7 @@ enum UserType { employee = 0, owner, _LENGTH_USERTYPE };
 static_assert(sizeof(USERTYPE_STRING) / sizeof(USERTYPE_STRING[0]) ==
                   (unsigned int)UserType::_LENGTH_USERTYPE,
               "Amount of UserType not equal to descriptions");
+inline const char *userTypeToCharArray(UserType);
 
 enum Action {
   changeArticle = 0,
@@ -33,6 +34,7 @@ enum Action {
 static_assert(sizeof(ACTION_STRING) / sizeof(ACTION_STRING[0]) ==
                   (unsigned int)Action::_LENGTH_ACTION,
               "Amount of actions not equal to descriptions");
+inline const char *actionToCharArray(Action);
 
 UserType getUserType(void);
 Action chooseAction(UserType);

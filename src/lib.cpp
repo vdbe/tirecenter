@@ -46,23 +46,16 @@ SearchResult<T> search(std::vector<T> &vec, std::string (T::*getString)(void)) {
     exit(1);
 
   for (unsigned int ii = 0; ii < size; ii++) {
-    char *c = NULL;
-    T *item = (vec.data() + ii);
-    std::string s = (item->*getString)();
+    std::string *s = new std::string;
+    *s = (vec[ii].*getString)();
 
-    c = (char *)malloc(s.size() * sizeof(char *));
-    if (options == NULL)
-      exit(1);
-    stpcpy(c, s.c_str());
-
-    options[ii] = c;
+    options[ii] = s->data();
   }
-
   searchResult.index = choose(options, size, 8);
   searchResult.ptr = vec.data() + searchResult.index;
 
   for (unsigned int ii = 0; ii < size; ii++) {
-    free(options[ii]);
+    delete options[ii];
   }
   free(options);
   return searchResult;
