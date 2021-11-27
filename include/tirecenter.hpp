@@ -22,6 +22,10 @@ private:
   std::vector<Invoice> invoices;
 
 public:
+  TireCenter();
+  TireCenter(std::string, std::string, std::vector<Article>,
+             std::vector<Customer>, std::vector<Invoice>);
+  ~TireCenter();
   std::string getName(void);
   void setName(std::string);
 

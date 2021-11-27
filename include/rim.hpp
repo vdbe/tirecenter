@@ -10,6 +10,9 @@ private:
   int width;
 
 public:
+  Rim(std::string, std::string, int, int, float, char, bool, std::string, int);
+  Rim();
+  ~Rim();
   bool getAluminium(void);
   void setAluminium(bool);
 
@@ -18,4 +21,6 @@ public:
 
   int getWidth(void);
   void setWidth(int);
+
+  void show(void);
 };

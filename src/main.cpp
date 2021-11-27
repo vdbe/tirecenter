@@ -1,6 +1,8 @@
 #include "action.hpp"
 #include "article.hpp"
+#include "company.hpp"
 #include "invoice.hpp"
+#include "tire.hpp"
 #include "tirecenter.hpp"
 
 #include <iostream>
@@ -15,9 +17,32 @@ int main() {
   std::vector<Article> &articles = tc.getArticlesRef();
   std::vector<Customer> &customers = tc.getCustomersRef();
   std::vector<Invoice> &invoices = tc.getInvoicesRef();
+  // fill(&tc, 20);
 
-  fill(&tc, 20);
+  Tire tire;
+  tire.setManufacturer("tire");
+
+  tire.setDiameter(10);
+
+  tire.setType('a');
+
+  tire.setPrice(11 * 1.1);
+
+  tire.setStock(11 * 11);
+
+  tire.setWidth(8);
+  tire.setHeight(7);
+  tire.setSpeedIndex("SPEED");
+  tire.setSeason('S');
+  articles.push_back(tire);
+
+  tire.show();
+  articles[0].show();
+
   const UserType user = getUserType();
+
+  Company c;
+  c.setName("test");
 
   do {
     action = chooseAction(user);

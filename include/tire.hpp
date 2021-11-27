@@ -11,6 +11,11 @@ private:
   char season;
 
 public:
+  Tire();
+  Tire(std::string, std::string, int, int, float, char, int, int, std::string,
+       char);
+  ~Tire();
+
   int getWidth(void);
   void setWidth(int);
 
@@ -22,4 +27,6 @@ public:
 
   char getSeason(void);
   void setSeason(char);
+
+  void show(void);
 };

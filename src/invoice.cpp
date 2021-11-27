@@ -4,6 +4,14 @@
 #include "customer.hpp"
 #include "invoice.hpp"
 
+Invoice::Invoice(){};
+Invoice::Invoice(Customer customer, std::vector<Article> articles, float price,
+                 int discount)
+    : customer(customer), articles(articles), price(price),
+      discount(discount){};
+
+Invoice::~Invoice(){};
+
 Customer Invoice::getCustomer(void) { return this->customer; }
 
 void Invoice::setCustomer(Customer customer) { this->customer = customer; }

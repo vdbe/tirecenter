@@ -1,5 +1,14 @@
 #include "article.hpp"
+
 #include <iostream>
+
+Article::Article(){};
+Article::Article(std::string name, std::string manufacturer, int stock,
+                 int diameter, float price, char type)
+    : name(name), manufacturer(manufacturer), stock(stock), diameter(diameter),
+      price(price), type(type) {}
+
+Article::~Article() {}
 
 std::string Article::getName(void) { return this->name; }
 void Article::setName(std::string name) { this->name = name; }

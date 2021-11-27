@@ -16,6 +16,10 @@ private:
   int discount;
 
 public:
+  Invoice();
+  Invoice(Customer, std::vector<Article>, float, int);
+  ~Invoice();
+
   Customer getCustomer(void);
   void setCustomer(Customer);
 

@@ -3,7 +3,7 @@
 #include <vector>
 
 class Article {
-private:
+protected:
   std::string name;
   std::string manufacturer;
   int stock;
@@ -12,6 +12,10 @@ private:
   char type;
 
 public:
+  Article();
+  Article(std::string, std::string, int, int, float, char);
+  ~Article();
+
   std::string getName(void);
   void setName(std::string);
 
@@ -30,5 +34,5 @@ public:
   char getType(void);
   void setType(char);
 
-  void show(void);
+  virtual void show(void);
 };

@@ -2,12 +2,15 @@
 #include <string>
 
 class Customer {
-private:
+protected:
   std::string name;
   std::string address;
   char type;
 
 public:
+  Customer();
+  Customer(std::string, std::string, char);
+  ~Customer();
   std::string getName(void);
   void setName(std::string);
 
@@ -17,5 +20,5 @@ public:
   char getType(void);
   void setType(char);
 
-  void show(void);
+  virtual void show(void);
 };

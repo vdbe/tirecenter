@@ -2,6 +2,11 @@
 
 #include "customer.hpp"
 
+Customer::Customer(){};
+Customer::Customer(std::string name, std::string address, char type)
+    : name(name), address(address), type(type) {}
+Customer::~Customer(){};
+
 std::string Customer::getName(void) { return this->name; }
 
 void Customer::setName(std::string name) { this->name = name; }
