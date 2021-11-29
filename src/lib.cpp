@@ -36,13 +36,16 @@ void cleanStdin(void) {
 
 template <typename T>
 SearchResult<T> search(std::vector<T> &vec, std::string (T::*getString)(void)) {
-  SearchResult<T> searchResult;
+  // SearchResult<T> searchResult;
+  unsigned int index;
   unsigned int size = vec.size();
   char **options = NULL;
 
   // Allocate memory for option pointers
   options = (char **)malloc(size * sizeof(char **));
-  if (options == NULL)
+  std::string **string_options =
+      (std::string **)malloc(size * sizeof(std::string **));
+  if (options == NULL || string_options == 0)
     exit(1);
 
   for (unsigned int ii = 0; ii < size; ii++) {
@@ -50,14 +53,24 @@ SearchResult<T> search(std::vector<T> &vec, std::string (T::*getString)(void)) {
     *s = (vec[ii].*getString)();
 
     options[ii] = s->data();
-  }
-  searchResult.index = choose(options, size, 8);
-  searchResult.ptr = vec.data() + searchResult.index;
 
-  for (unsigned int ii = 0; ii < size; ii++) {
-    delete options[ii];
+    string_options[ii] = s;
+    std::cout << options[ii] << std::endl;
   }
+
+  index = choose(options, size, 8);
+
+  SearchResult<T> searchResult = {index, vec[index]};
+
+  // Free pointer array to data of strings
   free(options);
+  // Clear strings
+  for (unsigned int ii = 0; ii < size; ii++) {
+    delete string_options[ii];
+  }
+  // Free pointer array to strings
+  free(string_options);
+
   return searchResult;
 }
 template SearchResult<Customer> search(std::vector<Customer> &,
@@ -71,7 +84,7 @@ void deleteFromVec(std::vector<T> &vec, SearchResult<T> searchResult,
   char c;
 
   // Print summary of to be deleted item
-  (searchResult.ptr->*summary)();
+  (searchResult.item.*summary)();
 
   // Confirm deletion
   std::cout << "Are you sure you want to delete this? [y/n]: ";

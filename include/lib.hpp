@@ -4,6 +4,7 @@
 #define DEFAULT_MAX_OPTIONS 8
 #endif
 
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -11,7 +12,7 @@
 
 template <typename T> struct SearchResult {
   unsigned int index;
-  T *ptr;
+  T &item;
 };
 
 void cleanStdin(void);

@@ -8,7 +8,9 @@
 #include <iostream>
 #include <vector>
 
+#include <functional>
 void fill(TireCenter *, int);
+#include <typeinfo>
 
 int main() {
   TireCenter tc;
@@ -17,7 +19,7 @@ int main() {
   std::vector<Article> &articles = tc.getArticlesRef();
   std::vector<Customer> &customers = tc.getCustomersRef();
   std::vector<Invoice> &invoices = tc.getInvoicesRef();
-  // fill(&tc, 20);
+  fill(&tc, 20);
 
   Tire tire;
   tire.setManufacturer("tire");
