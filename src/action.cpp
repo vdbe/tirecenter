@@ -8,11 +8,11 @@
 #include "lib.hpp"
 
 inline const char *userTypeToCharArray(UserType userType) {
-  return USERTYPE_STRING[userType];
+  return USERTYPE_STRING[static_cast<size_t>(userType)];
 }
 
 inline const char *actionToCharArray(Action action) {
-  return ACTION_STRING[action];
+  return ACTION_STRING[static_cast<size_t>(action)];
 }
 
 /* static functions */
@@ -29,15 +29,16 @@ Action chooseAction(UserType user) {
   // Allocate memory for option pointers
   options = (char **)malloc((len + 1) * sizeof(char **));
   // options = (char **)calloc(len, sizeof(char **));
-  if (options == NULL)
+  if (options == NULL) {
     exit(1);
+  }
 
   for (int ii = 0; ii < len; ii++) {
     options[ii] = (char *)ACTION_STRING[ii];
   }
   options[len] = (char *)actionToCharArray(Action::exitMenu);
 
-  action = (Action)choose(options, len + 1, 8);
+  action = static_cast<Action>(choose(options, len + 1, 8));
 
   free(options);
   return action;
@@ -106,7 +107,8 @@ void runAction(Action action, std::vector<Article *> &articles,
     break;
   default:
     // TODO: Error handling
-    std::cerr << "Invalid action type: " << action << std::endl;
+    std::cerr << "Invalid action type: " << static_cast<size_t>(action)
+              << std::endl;
     break;
   }
 }
@@ -198,7 +200,6 @@ void actionPlaceOrder(std::vector<Article *> &articles,
     local_article->setStock(amount);
 
     // Check if their is enough stock
-    // BUG: Stock is 1 when it should be 0
     stock = articleSearch.item->getStock();
     std::cout << stock << std::endl;
     if (amount <= stock) {

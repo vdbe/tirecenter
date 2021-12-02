@@ -5,14 +5,14 @@ class Article;
 class Invoice;
 class Customer;
 
-enum UserType { employee = 0, owner, _LENGTH_USERTYPE };
+enum class UserType { employee = 0, owner, _LENGTH };
 [[maybe_unused]] static const char *USERTYPE_STRING[] = {"owner", "employee"};
 static_assert(sizeof(USERTYPE_STRING) / sizeof(USERTYPE_STRING[0]) ==
-                  (unsigned int)UserType::_LENGTH_USERTYPE,
+                  static_cast<size_t>(UserType::_LENGTH),
               "Amount of UserType not equal to descriptions");
 inline const char *userTypeToCharArray(UserType);
 
-enum Action {
+enum class Action {
   changeArticle = 0,
   checkInvoices,
   placeOrder,
@@ -23,7 +23,7 @@ enum Action {
   deleteArticle,
   deleteCustomer,
   exitMenu,
-  _LENGTH_ACTION,
+  _LENGTH,
 };
 [[maybe_unused]] static const char *ACTION_STRING[] = {
     "change article",  "check invoices",
@@ -32,7 +32,7 @@ enum Action {
     "add article",     "delete article",
     "delete customer", "exit"};
 static_assert(sizeof(ACTION_STRING) / sizeof(ACTION_STRING[0]) ==
-                  (unsigned int)Action::_LENGTH_ACTION,
+                  static_cast<size_t>(Action::_LENGTH),
               "Amount of actions not equal to descriptions");
 inline const char *actionToCharArray(Action);
 
