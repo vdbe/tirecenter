@@ -5,22 +5,29 @@
 #include "invoice.hpp"
 
 Invoice::Invoice(){};
-Invoice::Invoice(Customer customer, std::vector<Article> articles, float price,
-                 int discount)
+Invoice::Invoice(Customer customer, std::vector<Article *> articles,
+                 float price, int discount)
     : customer(customer), articles(articles), price(price),
       discount(discount){};
 
-Invoice::~Invoice(){};
+#include <iostream>
+Invoice::~Invoice() {
+  // TODO: delete articles in articles vec
+  std::cout << "clear invoices" << std::endl;
+  for (Article *article : this->articles) {
+    delete article;
+  }
+};
 
 Customer Invoice::getCustomer(void) { return this->customer; }
 
 void Invoice::setCustomer(Customer customer) { this->customer = customer; }
 
-void Invoice::setArticles(std::vector<Article> articles) {
+void Invoice::setArticles(std::vector<Article *> articles) {
   this->articles = articles;
 }
 
-std::vector<Article> Invoice::getArticles(void) { return this->articles; }
+std::vector<Article *> Invoice::getArticles(void) { return this->articles; }
 
 float Invoice::getPrice(void) { return this->price; }
 
@@ -30,7 +37,7 @@ float Invoice::calculatePrice() {
   float price = 0;
 
   for (auto article : this->articles) {
-    price += article.getPrice();
+    price += article->getPrice();
   }
 
   this->price = price;

@@ -14,7 +14,7 @@ protected:
 public:
   Article();
   Article(std::string, std::string, int, int, float, char);
-  ~Article();
+  virtual ~Article();
 
   std::string getName(void);
   void setName(std::string);

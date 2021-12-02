@@ -11,7 +11,11 @@ Tire::Tire(std::string name, std::string manufacturer, int stock, int diameter,
     : Article(name, manufacturer, stock, diameter, price, type), width(width),
       height(height), speedIndex(speedIndex), season(season) {}
 
-Tire::~Tire() {}
+Tire::~Tire() {
+#ifdef PRINT_DESTRUCTORS
+  std::cout << "Tire::~Tire()" << std::endl;
+#endif
+}
 
 int Tire::getWidth(void) { return this->width; }
 void Tire::setWidth(int width) { this->width = width; }

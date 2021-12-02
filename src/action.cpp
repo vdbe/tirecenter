@@ -69,9 +69,9 @@ UserType getUserType(void) {
 }
 
 /* normal public functions */
-void runAction(Action action, std::vector<Article> &articles,
-               std::vector<Customer> &customers,
-               std::vector<Invoice> &invoices) {
+void runAction(Action action, std::vector<Article *> &articles,
+               std::vector<Customer *> &customers,
+               std::vector<Invoice *> &invoices) {
   switch (action) {
   case Action::changeArticle:
     actionChangeArticle(articles);
@@ -112,9 +112,7 @@ void runAction(Action action, std::vector<Article> &articles,
 }
 
 /* Actions */
-void actionChangeArticle(std::vector<Article> &articles) {
-  Article *p_article;
-
+void actionChangeArticle(std::vector<Article *> &articles) {
   std::string line;
 
   SearchResult<Article> searchResult = search(articles, &Article::getName);
@@ -122,67 +120,67 @@ void actionChangeArticle(std::vector<Article> &articles) {
   std::cout << "Leave blank if old value is correct" << std::endl;
 
   std::cout << "Name: ";
-  std::cout << searchResult.item.getName() << std::endl;
+  std::cout << searchResult.item->getName() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "") {
-    searchResult.item.setName(line);
+    searchResult.item->setName(line);
   }
 
   std::cout << "Manufacturer: ";
-  std::cout << searchResult.item.getManufacturer() << std::endl;
+  std::cout << searchResult.item->getManufacturer() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "") {
-    searchResult.item.setManufacturer(line);
+    searchResult.item->setManufacturer(line);
   }
 
   std::cout << "Diameter: ";
-  std::cout << searchResult.item.getDiameter() << std::endl;
+  std::cout << searchResult.item->getDiameter() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "" && stringIsInt(line)) {
-    searchResult.item.setDiameter(std::stoi(line));
+    searchResult.item->setDiameter(std::stoi(line));
   }
 
   std::cout << "Type: ";
-  std::cout << searchResult.item.getType() << std::endl;
+  std::cout << searchResult.item->getType() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "" && stringIsInt(line)) {
-    searchResult.item.setType(line[0]);
+    searchResult.item->setType(line[0]);
   }
 
   std::cout << "Stock: ";
-  std::cout << searchResult.item.getStock() << std::endl;
+  std::cout << searchResult.item->getStock() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "" && stringIsInt(line)) {
-    searchResult.item.setStock(std::stoi(line));
+    searchResult.item->setStock(std::stoi(line));
   }
 
   std::cout << "Price: ";
-  std::cout << searchResult.item.getPrice() << std::endl;
+  std::cout << searchResult.item->getPrice() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "" && stringIsFloat(line)) {
-    searchResult.item.setStock(std::stof(line));
+    searchResult.item->setStock(std::stof(line));
   }
 }
 
-void actionCheckInvoices(std::vector<Invoice> &invoices) {
+void actionCheckInvoices(std::vector<Invoice *> &invoices) {
   // TODO:
 }
 
-void actionPlaceOrder(std::vector<Article> &articles,
-                      std::vector<Customer> &customers,
-                      std::vector<Invoice> &invoices) {
+void actionPlaceOrder(std::vector<Article *> &articles,
+                      std::vector<Customer *> &customers,
+                      std::vector<Invoice *> &invoices) {
+  Invoice *invoice = new Invoice;
   char c;
-  Invoice invoice;
-  std::vector<Article> order_articles;
+  std::vector<Article *> order_articles;
   SearchResult<Customer> customerSearch = search(customers, &Customer::getName);
 
-  invoice.setCustomer(customerSearch.item);
+  invoice->setCustomer(*customerSearch.item);
 
   do {
     int stock;
@@ -190,17 +188,21 @@ void actionPlaceOrder(std::vector<Article> &articles,
 
     SearchResult<Article> articleSearch = search(articles, &Article::getName);
 
-    Article local_article = articleSearch.item;
+    Article *local_article = new Article;
+    // Make a clone and get a pointer to that clone
+    *local_article = *articleSearch.item;
 
     // Update stock
     std::cout << "Amount: ";
     std::cin >> amount;
-    local_article.setStock(amount);
+    local_article->setStock(amount);
 
     // Check if their is enough stock
-    stock = articleSearch.item.getStock();
+    // BUG: Stock is 1 when it should be 0
+    stock = articleSearch.item->getStock();
+    std::cout << stock << std::endl;
     if (amount <= stock) {
-      articleSearch.item.setStock(stock - amount);
+      articleSearch.item->setStock(stock - amount);
       order_articles.push_back(local_article);
     } else {
       std::cout << "Cant place order not enough stock, " << std::endl
@@ -212,15 +214,15 @@ void actionPlaceOrder(std::vector<Article> &articles,
     cleanStdin();
   } while (c == 'y');
 
-  invoice.setArticles(order_articles);
+  invoice->setArticles(order_articles);
 
   // TODO : Check if both are needed invoice.calculatePrice();
-  invoice.calculateDiscount();
+  invoice->calculateDiscount();
 
   invoices.push_back(invoice);
 }
 
-void actionChangeCustomer(std::vector<Customer> &customers) {
+void actionChangeCustomer(std::vector<Customer *> &customers) {
   std::string line;
 
   SearchResult<Customer> searchResult = search(customers, &Customer::getName);
@@ -228,52 +230,52 @@ void actionChangeCustomer(std::vector<Customer> &customers) {
   std::cout << "Leave blank if old value is correct" << std::endl;
 
   std::cout << "Name: ";
-  std::cout << searchResult.item.getName() << std::endl;
+  std::cout << searchResult.item->getName() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "") {
-    searchResult.item.setName(line);
+    searchResult.item->setName(line);
   }
 
   std::cout << "Address: ";
-  std::cout << searchResult.item.getAddress() << std::endl;
+  std::cout << searchResult.item->getAddress() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "") {
-    searchResult.item.setAddress(line);
+    searchResult.item->setAddress(line);
   }
 
   std::cout << "Type: ";
-  std::cout << searchResult.item.getType() << std::endl;
+  std::cout << searchResult.item->getType() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "") {
-    searchResult.item.setType(line[0]);
+    searchResult.item->setType(line[0]);
   }
 }
 
-void actionAddCustomer(std::vector<Customer> &customers) {
-  Customer customer;
+void actionAddCustomer(std::vector<Customer *> &customers) {
+  Customer *customer = new Customer;
 
   std::string line;
   char c;
 
   std::cout << "Name: ";
   std::getline(std::cin, line);
-  customer.setName(line);
+  customer->setName(line);
 
   std::cout << "Address: ";
   std::getline(std::cin, line);
-  customer.setAddress(line);
+  customer->setAddress(line);
 
   std::cout << "Type: ";
   std::cin >> c;
-  customer.setType(c);
+  customer->setType(c);
 
   customers.push_back(customer);
 }
 
-void actionUpdateStock(std::vector<Article> &articles) {
+void actionUpdateStock(std::vector<Article *> &articles) {
 
   std::string line;
 
@@ -282,16 +284,16 @@ void actionUpdateStock(std::vector<Article> &articles) {
   std::cout << "Leave blank if old value is correct" << std::endl;
 
   std::cout << "Stock: ";
-  std::cout << searchResult.item.getStock() << std::endl;
+  std::cout << searchResult.item->getStock() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "" && stringIsInt(line)) {
-    searchResult.item.setStock(std::stoi(line));
+    searchResult.item->setStock(std::stoi(line));
   }
 }
 
-void actionAddArticle(std::vector<Article> &articles) {
-  Article article;
+void actionAddArticle(std::vector<Article *> &articles) {
+  Article *article = new Article;
 
   std::string line;
   int integer;
@@ -300,39 +302,39 @@ void actionAddArticle(std::vector<Article> &articles) {
 
   std::cout << "Name: ";
   std::getline(std::cin, line);
-  article.setName(line);
+  article->setName(line);
 
   std::cout << "Manufacturer: ";
   std::getline(std::cin, line);
-  article.setManufacturer(line);
+  article->setManufacturer(line);
 
   std::cout << "Diameter: ";
   std::cin >> integer;
-  article.setDiameter(integer);
+  article->setDiameter(integer);
 
   std::cout << "Type: ";
   std::cin >> c;
-  article.setType(c);
+  article->setType(c);
 
   std::cout << "Stock: ";
   std::cin >> integer;
-  article.setStock(integer);
+  article->setStock(integer);
 
   std::cout << "Price: ";
   std::cin >> f;
-  article.setPrice(f);
+  article->setPrice(f);
 
   cleanStdin();
 
   articles.push_back(article);
 }
 
-void actionDeleteArticle(std::vector<Article> &articles) {
+void actionDeleteArticle(std::vector<Article *> &articles) {
   SearchResult<Article> searchResult = search(articles, &Article::getName);
   deleteFromVec(articles, searchResult, &Article::show);
 }
 
-void actionDeleteCustomer(std::vector<Customer> &customers) {
+void actionDeleteCustomer(std::vector<Customer *> &customers) {
   SearchResult<Customer> searchResult = search(customers, &Customer::getName);
   deleteFromVec(customers, searchResult, &Customer::show);
 }

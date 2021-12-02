@@ -5,7 +5,12 @@
 Customer::Customer(){};
 Customer::Customer(std::string name, std::string address, char type)
     : name(name), address(address), type(type) {}
-Customer::~Customer(){};
+
+Customer::~Customer() {
+#ifdef PRINT_DESTRUCTORS
+  std::cout << "Customer::~Customer()" << std::endl;
+#endif
+}
 
 std::string Customer::getName(void) { return this->name; }
 

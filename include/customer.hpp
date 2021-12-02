@@ -10,7 +10,8 @@ protected:
 public:
   Customer();
   Customer(std::string, std::string, char);
-  ~Customer();
+  virtual ~Customer();
+
   std::string getName(void);
   void setName(std::string);
 

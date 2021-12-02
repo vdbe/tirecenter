@@ -8,7 +8,11 @@ Article::Article(std::string name, std::string manufacturer, int stock,
     : name(name), manufacturer(manufacturer), stock(stock), diameter(diameter),
       price(price), type(type) {}
 
-Article::~Article() {}
+Article::~Article() {
+#ifdef PRINT_DESTRUCTORS
+  std::cout << "Article::~Article()" << std::endl;
+#endif
+}
 
 std::string Article::getName(void) { return this->name; }
 void Article::setName(std::string name) { this->name = name; }

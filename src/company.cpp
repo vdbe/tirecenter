@@ -9,7 +9,11 @@ Company::Company(std::string name, std::string address, char type,
                  std::string vat, int volumeDiscount)
     : Customer(name, address, type), vat(vat), volumeDiscount(volumeDiscount) {}
 
-Company::~Company(){};
+Company::~Company() {
+#ifdef PRINT_DESTRUCTORS
+  std::cout << "Company::~Company()" << std::endl;
+#endif
+};
 
 std::string Company::getVAT(void) { return this->vat; }
 

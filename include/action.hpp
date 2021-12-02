@@ -38,17 +38,17 @@ inline const char *actionToCharArray(Action);
 
 UserType getUserType(void);
 Action chooseAction(UserType);
-void runAction(Action, std::vector<Article> &, std::vector<Customer> &,
-               std::vector<Invoice> &);
+void runAction(Action, std::vector<Article *> &, std::vector<Customer *> &,
+               std::vector<Invoice *> &);
 
 // Actions
-void actionChangeArticle(std::vector<Article> &);
-void actionPlaceOrder(std::vector<Article> &, std::vector<Customer> &,
-                      std::vector<Invoice> &);
-void actionCheckInvoices(std::vector<Invoice> &);
-void actionChangeCustomer(std::vector<Customer> &);
-void actionAddCustomer(std::vector<Customer> &);
-void actionUpdateStock(std::vector<Article> &);
-void actionAddArticle(std::vector<Article> &);
-void actionDeleteArticle(std::vector<Article> &);
-void actionDeleteCustomer(std::vector<Customer> &);
+void actionChangeArticle(std::vector<Article *> &);
+void actionPlaceOrder(std::vector<Article *> &, std::vector<Customer *> &,
+                      std::vector<Invoice *> &);
+void actionCheckInvoices(std::vector<Invoice *> &);
+void actionChangeCustomer(std::vector<Customer *> &);
+void actionAddCustomer(std::vector<Customer *> &);
+void actionUpdateStock(std::vector<Article *> &);
+void actionAddArticle(std::vector<Article *> &);
+void actionDeleteArticle(std::vector<Article *> &);
+void actionDeleteCustomer(std::vector<Customer *> &);

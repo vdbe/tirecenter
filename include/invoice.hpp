@@ -11,20 +11,20 @@ class Invoice {
 private:
   Customer customer;
   // TODO: Try to replace this with std::array<>
-  std::vector<Article> articles;
+  std::vector<Article *> articles;
   float price;
   int discount;
 
 public:
   Invoice();
-  Invoice(Customer, std::vector<Article>, float, int);
+  Invoice(Customer, std::vector<Article *>, float, int);
   ~Invoice();
 
   Customer getCustomer(void);
   void setCustomer(Customer);
 
-  std::vector<Article> getArticles();
-  void setArticles(std::vector<Article>);
+  std::vector<Article *> getArticles();
+  void setArticles(std::vector<Article *>);
 
   float getPrice(void);
   void setPrice(float);
