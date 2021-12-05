@@ -16,10 +16,7 @@ jobs:
 
     - name: Print env
       run: make info
-      env:
-        CXXFLAGS: -Werror
 
     - name: Build program
-      run: make release
-      env:
-        CXXFLAGS: -Werror
+      run: |
+        make release 2>&1 |  awk '{ r = gensub(/(.*):([0-9]{1,}):([0-9]{1,}): (error|warning): (.*) \[(.*)\]/, "::\\4 file=\\1,line=\\2,col=\\3,title=\\6::\\5\n\\0", "g"); print r;}' && (exit ${PIPESTATUS[0]})

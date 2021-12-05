@@ -7,17 +7,18 @@
 Invoice::Invoice(){};
 Invoice::Invoice(Customer customer, std::vector<Article *> articles,
                  float price, int discount)
-    : customer(customer), articles(articles), price(price),
-      discount(discount){};
+    : customer(customer), articles(articles), price(price), discount(discount) {
+}
 
-#include <iostream>
 Invoice::~Invoice() {
-  // TODO: delete articles in articles vec
-  std::cout << "clear invoices" << std::endl;
+#ifdef PRINT_DESTRUCTORS
+#include <iostream>
+  std::cout << "Invoice::~Invoice()" << std::endl;
+#endif
   for (Article *article : this->articles) {
     delete article;
   }
-};
+}
 
 Customer Invoice::getCustomer(void) { return this->customer; }
 

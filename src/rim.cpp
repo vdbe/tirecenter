@@ -12,7 +12,7 @@ Rim::~Rim() {
 #ifdef PRINT_DESTRUCTORS
   std::cout << "Rim::~Rim()" << std::endl;
 #endif
-};
+}
 
 bool Rim::getAluminium(void) { return this->aluminium; }
 void Rim::setAluminium(bool aluminium) { this->aluminium = aluminium; }

@@ -12,13 +12,13 @@
  * Public Function
  */
 
-TireCenter::TireCenter(){};
+TireCenter::TireCenter() {}
 TireCenter::TireCenter(std::string name, std::string address,
                        std::vector<Article *> articles,
                        std::vector<Customer *> customers,
                        std::vector<Invoice *> invoices)
     : name(name), address(address), articles(articles), customers(customers),
-      invoices(invoices){};
+      invoices(invoices) {}
 
 TireCenter::~TireCenter() {
 #ifdef PRINT_DESTRUCTORS
@@ -35,7 +35,7 @@ TireCenter::~TireCenter() {
   for (Invoice *invoice : this->invoices) {
     delete invoice;
   }
-};
+}
 
 /* getters and setter */
 std::string TireCenter::getName(void) { return this->name; }

@@ -13,7 +13,7 @@ Company::~Company() {
 #ifdef PRINT_DESTRUCTORS
   std::cout << "Company::~Company()" << std::endl;
 #endif
-};
+}
 
 std::string Company::getVAT(void) { return this->vat; }
 

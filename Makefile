@@ -14,8 +14,8 @@
 #
 
 CXX      ?= g++
-CXXFLAGS += -std=c++2a -pedantic-errors -Wall -Wextra #-Werror
-LDFLAGS  += -L/usr/lib -lstdc++ -lm
+CXXFLAGS += -std=c++2a -Wpedantic -Wall -Wextra #-Werror
+LDFLAGS  +=
 BUILD    ?= ./build
 OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)
