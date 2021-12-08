@@ -61,7 +61,7 @@ static: release
 docker: build
 	docker build -t tirecenter .
 	@$(eval LAYER = $(shell docker save tirecenter  | tar xf - repositories  --to-stdout | sed -r --expression='s/.*\{.*\"tirecenter\":\{.*\"latest\":\"(.*)\".*}.*}.*/\1/'))
-	@docker save tirecenter  | tar xf - $(LAYER)/layer.tar --to-stdout | tar -C $(APP_DIR) -xf - tirecenter
+	@docker save tirecenter  | tar xf - ${LAYER}/layer.tar --to-stdout | tar -C ${APP_DIR} -xf - tirecenter
 
 run: all
 	$(APP_DIR)/$(TARGET)

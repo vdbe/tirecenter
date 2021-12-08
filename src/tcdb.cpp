@@ -13,7 +13,8 @@
 
 namespace tcdb {
 void load(TireCenter &tireCenter, std::string inFileName) {
-  char buffer[8];
+  // 1 byte extra
+  char buffer[9];
 
   std::ifstream ifile{inFileName, std::ios::out | std::ios::binary};
 
@@ -24,7 +25,7 @@ void load(TireCenter &tireCenter, std::string inFileName) {
     exit(1);
   }
 
-  loadTireCenter(tireCenter, ifile);
+  _::loadTireCenter(tireCenter, ifile);
 
   ifile.close();
 }
@@ -36,13 +37,13 @@ void save(TireCenter &tireCenter, std::string outFileName) {
   ofile << VERSION;
 
   // Save TireCenter and trickle down
-  saveTireCenter(tireCenter, ofile);
+  _::saveTireCenter(tireCenter, ofile);
 
   // Close file
   ofile.close();
 }
 
-namespace {
+namespace _ {
 
 void loadTireCenter(TireCenter &tireCenter, std::ifstream &ifile) {
   std::string lineBuffer;
@@ -321,6 +322,6 @@ void saveInvoice(Invoice *invoice, std::ofstream &ofile) {
   ofile.write((char *)&discount, sizeof(int64_t));
 }
 
-} // namespace
+} // namespace _
 
 } // namespace tcdb

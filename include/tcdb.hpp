@@ -9,12 +9,12 @@ class Invoice;
 class Customer;
 
 namespace tcdb {
-const static char VERSION[] = "TCDB0001";
+[[maybe_unused]] const static char VERSION[] = "TCDB0001";
 
 void load(TireCenter &, std::string);
 void save(TireCenter &, std::string);
 
-namespace {
+namespace _ {
 void loadTireCenter(TireCenter &, std::ifstream &);
 void saveTireCenter(TireCenter &, std::ofstream &);
 
@@ -35,5 +35,5 @@ void saveCustomer(Customer *, std::ofstream &);
 
 Invoice *loadInvoice(std::ifstream &);
 void saveInvoice(Invoice *, std::ofstream &);
-} // namespace
+} // namespace _
 } // namespace tcdb
