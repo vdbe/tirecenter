@@ -1,5 +1,6 @@
 #include "tirecenter.hpp"
 
+#include <cstring>
 #include <string>
 #include <vector>
 
@@ -7,6 +8,8 @@
 #include "customer.hpp"
 #include "invoice.hpp"
 #include "lib.hpp"
+#include "rim.hpp"
+#include "tire.hpp"
 
 /*
  * Public Function

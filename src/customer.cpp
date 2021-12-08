@@ -2,7 +2,7 @@
 
 #include "customer.hpp"
 
-Customer::Customer(){};
+Customer::Customer() {}
 Customer::Customer(std::string name, std::string address, char type)
     : name(name), address(address), type(type) {}
 

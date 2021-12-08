@@ -1,10 +1,11 @@
 #include "article.hpp"
 
+#include <fstream>
 #include <iostream>
 
-Article::Article(){};
-Article::Article(std::string name, std::string manufacturer, int stock,
-                 int diameter, float price, char type)
+Article::Article() {}
+Article::Article(std::string name, std::string manufacturer, int64_t stock,
+                 int64_t diameter, float price, char type)
     : name(name), manufacturer(manufacturer), stock(stock), diameter(diameter),
       price(price), type(type) {}
 
@@ -22,11 +23,11 @@ void Article::setManufacturer(std::string manufacturer) {
   this->manufacturer = manufacturer;
 }
 
-int Article::getStock(void) { return this->stock; }
-void Article::setStock(int stock) { this->stock = stock; }
+int64_t Article::getStock(void) { return this->stock; }
+void Article::setStock(int64_t stock) { this->stock = stock; }
 
-int Article::getDiameter(void) { return this->diameter; }
-void Article::setDiameter(int diameter) { this->diameter = diameter; }
+int64_t Article::getDiameter(void) { return this->diameter; }
+void Article::setDiameter(int64_t diameter) { this->diameter = diameter; }
 
 float Article::getPrice(void) { return this->price; }
 void Article::setPrice(float price) { this->price = price; }

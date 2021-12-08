@@ -2,55 +2,53 @@
 
 #include "action.hpp"
 #include "article.hpp"
-#include "company.hpp"
-#include "invoice.hpp"
+#include "rim.hpp"
+#include "tcdb.hpp"
 #include "tire.hpp"
 #include "tirecenter.hpp"
 
+#include <filesystem>
 #include <iostream>
 #include <vector>
 
-#include <functional>
 void fill(TireCenter *, int);
-#include <typeinfo>
 
-int main() {
-
+int main(int argc, char **argv) {
   TireCenter tc;
-  Action action;
+  std::string file;
 
-  std::vector<Article *> &articles = tc.getArticlesRef();
+  // Get 'db' location
+  if (argc > 0) {
+    file = argv[1];
+  } else {
+    file = "test.tcdb";
+  }
+
+  // Check if it already exists
+  // if so load it
+  std::filesystem::path f{file};
+  if (std::filesystem::exists(f)) {
+    tcdb::load(tc, file);
+  } else {
+    tc.setName("Tire Center");
+    tc.setAddress("The North Pole");
+    fill(&tc, 20);
+  }
+
+  Action action;
+  const UserType user = getUserType();
+
   std::vector<Customer *> &customers = tc.getCustomersRef();
   std::vector<Invoice *> &invoices = tc.getInvoicesRef();
-  fill(&tc, 20);
-
-  Tire *tire = new Tire;
-  tire->setManufacturer("tire");
-
-  tire->setDiameter(10);
-
-  tire->setType('a');
-
-  tire->setPrice(11 * 1.1);
-
-  tire->setStock(11 * 11);
-
-  tire->setWidth(8);
-  tire->setHeight(7);
-  tire->setSpeedIndex("SPEED");
-  tire->setSeason('S');
-  articles.push_back(tire);
-
-  tire->show();
-  articles[0]->show();
-
-  const UserType user = getUserType();
+  std::vector<Article *> &articles = tc.getArticlesRef();
 
   do {
     action = chooseAction(user);
     runAction(action, articles, customers, invoices);
   } while (action != Action::exitMenu);
-  return 0;
+
+  // Save 'db'
+  tcdb::save(tc, file);
 }
 
 #include <sstream>
@@ -72,7 +70,7 @@ void fill(TireCenter *tc, int count) {
 
       article->setDiameter(ii);
 
-      article->setType(ii + 'a');
+      article->setType('t');
 
       article->setPrice(ii * 1.1);
 
@@ -97,7 +95,7 @@ void fill(TireCenter *tc, int count) {
       ss << "street " << ii;
       customer->setAddress(ss.str());
 
-      customer->setType(ii + 'a');
+      customer->setType('c');
 
       customers[ii] = customer;
     }

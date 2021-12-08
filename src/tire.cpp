@@ -5,9 +5,9 @@
 #include "article.hpp"
 
 Tire::Tire() {}
-Tire::Tire(std::string name, std::string manufacturer, int stock, int diameter,
-           float price, char type, int width, int height,
-           std::string speedIndex, char season)
+Tire::Tire(std::string name, std::string manufacturer, int64_t stock,
+           int64_t diameter, float price, char type, int64_t width,
+           int64_t height, std::string speedIndex, char season)
     : Article(name, manufacturer, stock, diameter, price, type), width(width),
       height(height), speedIndex(speedIndex), season(season) {}
 
@@ -17,11 +17,11 @@ Tire::~Tire() {
 #endif
 }
 
-int Tire::getWidth(void) { return this->width; }
-void Tire::setWidth(int width) { this->width = width; }
+int64_t Tire::getWidth(void) { return this->width; }
+void Tire::setWidth(int64_t width) { this->width = width; }
 
-int Tire::getHeight(void) { return this->height; }
-void Tire::setHeight(int height) { this->height = height; }
+int64_t Tire::getHeight(void) { return this->height; }
+void Tire::setHeight(int64_t height) { this->height = height; }
 
 std::string Tire::getSpeedIndex(void) { return this->speedIndex; }
 void Tire::setSpeedIndex(std::string speedIndex) {

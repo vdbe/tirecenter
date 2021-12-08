@@ -7,20 +7,22 @@ class Rim : public Article {
 private:
   bool aluminium;
   std::string color;
-  int width;
+  int64_t width;
 
 public:
-  Rim(std::string, std::string, int, int, float, char, bool, std::string, int);
+  Rim(std::string, std::string, int64_t, int64_t, float, char, bool,
+      std::string, int64_t);
   Rim();
   ~Rim();
+
   bool getAluminium(void);
   void setAluminium(bool);
 
   std::string getColor(void);
   void setColor(std::string);
 
-  int getWidth(void);
-  void setWidth(int);
+  int64_t getWidth(void);
+  void setWidth(int64_t);
 
   void show(void);
 };
