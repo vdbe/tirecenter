@@ -44,3 +44,5 @@ void Article::show(void) {
             << "\tStock: " << this->stock << std::endl
             << "\tPrice: " << this->price << std::endl;
 }
+
+Article *Article::clone(void) const { return new Article(*this); }

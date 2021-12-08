@@ -3,9 +3,12 @@
 #include <vector>
 
 #include "article.hpp"
+#include "company.hpp"
 #include "customer.hpp"
 #include "invoice.hpp"
 #include "lib.hpp"
+#include "rim.hpp"
+#include "tire.hpp"
 
 inline const char *userTypeToCharArray(UserType userType) {
   return USERTYPE_STRING[static_cast<size_t>(userType)];
@@ -190,9 +193,11 @@ void actionPlaceOrder(std::vector<Article *> &articles,
 
     SearchResult<Article> articleSearch = search(articles, &Article::getName);
 
-    Article *local_article = new Article;
-    // Make a clone and get a pointer to that clone
-    *local_article = *articleSearch.item;
+    // Article *local_article = new Article;
+    //// Make a clone and get a pointer to that clone
+    //*local_article = *articleSearch.item;
+
+    Article *local_article = articleSearch.item->clone();
 
     // Update stock
     std::cout << "Amount: ";
@@ -256,24 +261,34 @@ void actionChangeCustomer(std::vector<Customer *> &customers) {
 }
 
 void actionAddCustomer(std::vector<Customer *> &customers) {
-  Customer *customer = new Customer;
-
-  std::string line;
-  char c;
+  std::string name, address;
+  char type;
 
   std::cout << "Name: ";
-  std::getline(std::cin, line);
-  customer->setName(line);
+  std::getline(std::cin, name);
 
   std::cout << "Address: ";
-  std::getline(std::cin, line);
-  customer->setAddress(line);
+  std::getline(std::cin, address);
 
   std::cout << "Type: ";
-  std::cin >> c;
-  customer->setType(c);
+  std::cin >> type;
 
-  customers.push_back(customer);
+  if (type == 'b') {
+    std::string vat;
+    int64_t volumeDiscount;
+
+    std::cout << "VAT: ";
+    std::getline(std::cin, vat);
+
+    std::cout << "Volume discount: ";
+    std::cin >> volumeDiscount;
+
+    Company *company = new Company(name, address, type, vat, volumeDiscount);
+    customers.push_back(company);
+  } else {
+    Customer *customer = new Customer(name, address, type);
+    customers.push_back(customer);
+  }
 }
 
 void actionUpdateStock(std::vector<Article *> &articles) {
@@ -294,40 +309,73 @@ void actionUpdateStock(std::vector<Article *> &articles) {
 }
 
 void actionAddArticle(std::vector<Article *> &articles) {
-  Article *article = new Article;
-
-  std::string line;
-  int integer;
-  char c;
-  float f;
+  std::string name, manufacturer;
+  int64_t diameter, stock;
+  char type;
+  float price;
 
   std::cout << "Name: ";
-  std::getline(std::cin, line);
-  article->setName(line);
+  std::getline(std::cin, name);
 
   std::cout << "Manufacturer: ";
-  std::getline(std::cin, line);
-  article->setManufacturer(line);
+  std::getline(std::cin, manufacturer);
 
   std::cout << "Diameter: ";
-  std::cin >> integer;
-  article->setDiameter(integer);
+  std::cin >> diameter;
 
   std::cout << "Type: ";
-  std::cin >> c;
-  article->setType(c);
+  std::cin >> type;
 
   std::cout << "Stock: ";
-  std::cin >> integer;
-  article->setStock(integer);
+  std::cin >> stock;
 
   std::cout << "Price: ";
-  std::cin >> f;
-  article->setPrice(f);
+  std::cin >> price;
+
+  if (type == 't') {
+    int64_t width, height;
+    std::string speedIndex;
+    char season;
+
+    std::cout << "Width";
+    std::cin >> width;
+
+    std::cout << "Stock: ";
+    std::cin >> height;
+
+    std::cout << "Speed index: ";
+    std::cin >> speedIndex;
+
+    std::cout << "season: ";
+    std::cin >> season;
+
+    Tire *tire = new Tire(name, manufacturer, stock, diameter, price, type,
+                          width, height, speedIndex, season);
+    articles.push_back(tire);
+  } else if (type == 'r') {
+    bool aluminium;
+    std::string color;
+    int64_t width;
+
+    std::cout << "Aluminium: ";
+    std::cin >> aluminium;
+
+    std::cout << "color: ";
+    std::cin >> color;
+
+    std::cout << "width: ";
+    std::cin >> width;
+
+    Rim *rim = new Rim(name, manufacturer, stock, diameter, price, type,
+                       aluminium, color, width);
+    articles.push_back(rim);
+  } else {
+    Article *article =
+        new Article(name, manufacturer, stock, diameter, price, type);
+    articles.push_back(article);
+  }
 
   cleanStdin();
-
-  articles.push_back(article);
 }
 
 void actionDeleteArticle(std::vector<Article *> &articles) {

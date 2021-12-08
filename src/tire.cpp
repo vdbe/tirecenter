@@ -43,3 +43,5 @@ void Tire::show(void) {
             << "\tStock: " << this->stock << std::endl
             << "\tPrice: " << this->price << std::endl;
 }
+
+Article *Tire::clone(void) const { return new Tire(*this); }

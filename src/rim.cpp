@@ -36,3 +36,5 @@ void Rim::show(void) {
             << "\tStock: " << this->stock << std::endl
             << "\tPrice: " << this->price << std::endl;
 }
+
+Article *Rim::clone(void) const { return new Rim(*this); }

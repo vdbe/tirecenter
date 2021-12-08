@@ -95,6 +95,7 @@ void deleteFromVec(std::vector<T *> &vec, SearchResult<T> searchResult,
     return;
 
   // Delete element
+  delete searchResult.item;
   vec.erase(vec.begin() + searchResult.index);
 }
 template void deleteFromVec(std::vector<Customer *> &, SearchResult<Customer>,

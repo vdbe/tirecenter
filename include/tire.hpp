@@ -29,6 +29,5 @@ public:
   void setSeason(char);
 
   void show(void);
-  void save(std::ofstream &);
-  void load(std::ifstream &);
+  Article *clone(void) const;
 };
