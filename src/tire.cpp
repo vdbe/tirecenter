@@ -44,4 +44,11 @@ void Tire::show(void) {
             << "\tPrice: " << this->price << std::endl;
 }
 
+void Tire::showSummary(void) {
+  std::cout << "=== Tire ===" << std::endl
+            << "\tName: " << this->name << std::endl
+            << "\tStock: " << this->stock << std::endl
+            << "\tPrice: " << this->price << std::endl;
+}
+
 Article *Tire::clone(void) const { return new Tire(*this); }

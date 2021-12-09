@@ -36,5 +36,6 @@ public:
   void setType(char);
 
   virtual void show(void);
+  virtual void showSummary(void);
   virtual Article *clone(void) const;
 };

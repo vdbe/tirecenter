@@ -25,5 +25,6 @@ public:
   void setWidth(int64_t);
 
   void show(void);
+  void showSummary(void);
   Article *clone(void) const;
 };

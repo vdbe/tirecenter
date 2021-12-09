@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <vector>
 
 #include "article.hpp"
@@ -41,7 +42,11 @@ float Invoice::calculatePrice() {
   float price = 0;
 
   for (auto article : this->articles) {
-    price += article->getPrice();
+    price += article->getPrice() * article->getStock();
+  }
+
+  if (this->customer.getType() == 'c') {
+    price *= 1.21;
   }
 
   this->price = price;
@@ -54,6 +59,44 @@ int64_t Invoice::getDiscount(void) { return this->discount; }
 void Invoice::setDiscount(int64_t discount) { this->discount = discount; }
 
 float Invoice::calculateDiscount() {
-  // TODO: Find out what this function is supposed to do
-  return (float)this->discount;
+  char type = this->customer.getType();
+  float discount = 0;
+
+  if (type == 'b') {
+    for (Article *article : this->articles) {
+      if (article->getStock() >= 10) {
+        discount += (article->getPrice() + article->getStock()) * 0.1;
+      }
+    }
+  } else if (type == 'c') {
+    // Get Tire diameters
+    std::map<int64_t, bool> diameters;
+    for (Article *article : this->articles) {
+      if (article->getType() == 't' && article->getStock() >= 4) {
+        diameters[article->getDiameter()] = true;
+      }
+    }
+
+    for (Article *article : this->articles) {
+      if (article->getType() == 'r') {
+        if (diameters.find(article->getDiameter()) != diameters.end() &&
+            diameters[article->getDiameter() == true]) {
+          diameters[article->getDiameter()] = false;
+          discount += article->getPrice() * 0.1;
+        }
+      }
+    }
+    discount *= 1.21;
+  }
+
+  this->discount = discount;
+  return discount;
+}
+
+void Invoice::show(void) {
+  std::cout << "=== Invoice ====" << std::endl;
+  this->customer.show();
+  for (Article *article : this->articles) {
+    article->show();
+  }
 }

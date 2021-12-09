@@ -37,4 +37,11 @@ void Rim::show(void) {
             << "\tPrice: " << this->price << std::endl;
 }
 
+void Rim::showSummary(void) {
+  std::cout << "=== Rim ===" << std::endl
+            << "\tName: " << this->name << std::endl
+            << "\tStock: " << this->stock << std::endl
+            << "\tPrice: " << this->price << std::endl;
+}
+
 Article *Rim::clone(void) const { return new Rim(*this); }

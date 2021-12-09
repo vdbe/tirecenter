@@ -174,7 +174,9 @@ void actionChangeArticle(std::vector<Article *> &articles) {
 }
 
 void actionCheckInvoices(std::vector<Invoice *> &invoices) {
-  // TODO:
+  for (Invoice *invoice : invoices) {
+    invoice->show();
+  }
 }
 
 void actionPlaceOrder(std::vector<Article *> &articles,
@@ -182,7 +184,7 @@ void actionPlaceOrder(std::vector<Article *> &articles,
                       std::vector<Invoice *> &invoices) {
   Invoice *invoice = new Invoice;
   char c;
-  std::vector<Article *> order_articles;
+  std::vector<Article *> order_articles = invoice->getArticlesAsRef();
   SearchResult<Customer> customerSearch = search(customers, &Customer::getName);
 
   invoice->setCustomer(*customerSearch.item);
@@ -193,15 +195,27 @@ void actionPlaceOrder(std::vector<Article *> &articles,
 
     SearchResult<Article> articleSearch = search(articles, &Article::getName);
 
-    // Article *local_article = new Article;
-    //// Make a clone and get a pointer to that clone
-    //*local_article = *articleSearch.item;
-
     Article *local_article = articleSearch.item->clone();
+    char type = local_article->getType();
 
     // Update stock
-    std::cout << "Amount: ";
+    switch (type) {
+    case 't':
+      std::cout << "How many sets of 4 tires: ";
+      break;
+    case 'r':
+      std::cout << "Fow many sets of four rims: ";
+      break;
+    default:
+      std::cout << "Amount: ";
+      break;
+    }
+
     std::cin >> amount;
+    if (type == 'r' || type == 't') {
+      amount *= 4;
+    }
+
     local_article->setStock(amount);
 
     // Check if their is enough stock
@@ -219,8 +233,6 @@ void actionPlaceOrder(std::vector<Article *> &articles,
     std::cin >> c;
     cleanStdin();
   } while (c == 'y');
-
-  invoice->setArticles(order_articles);
 
   // TODO : Check if both are needed invoice.calculatePrice();
   invoice->calculateDiscount();

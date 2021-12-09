@@ -29,5 +29,6 @@ public:
   void setSeason(char);
 
   void show(void);
+  void showSummary(void);
   Article *clone(void) const;
 };

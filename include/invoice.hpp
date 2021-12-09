@@ -34,4 +34,6 @@ public:
   int64_t getDiscount(void);
   void setDiscount(int64_t);
   float calculateDiscount(void);
+
+  void show(void);
 };

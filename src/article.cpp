@@ -45,4 +45,11 @@ void Article::show(void) {
             << "\tPrice: " << this->price << std::endl;
 }
 
+void Article::showSummary(void) {
+  std::cout << "=== Article ===" << std::endl
+            << "\tName: " << this->name << std::endl
+            << "\tStock: " << this->stock << std::endl
+            << "\tPrice: " << this->price << std::endl;
+}
+
 Article *Article::clone(void) const { return new Article(*this); }
