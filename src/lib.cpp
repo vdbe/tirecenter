@@ -1,6 +1,7 @@
 #include <cstring>
 #include <iostream>
 #include <limits>
+#include <map>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -166,4 +167,98 @@ size_t choose(char *options[], size_t size, size_t max_options) {
   } while (choice >= page_len);
 
   return page * max_options + choice;
+}
+
+SearchResult<Article> searchArticle(std::vector<Article *> &articles) {
+  const static char *filterOptions[] = {"All", "Filter on diameter",
+                                        "Filter on type"};
+  int choice = choose((char **)filterOptions, 3, 8);
+
+  SearchResult<Article> searchResult;
+  if (choice == 1) {
+    // Get all articles diameters
+    std::map<int64_t, int64_t> diameters;
+    for (Article *article : articles) {
+      int64_t diameter = article->getDiameter();
+
+      if (diameters.find(diameter) == diameters.end()) {
+        // New diameter
+        diameters[diameter] = 1;
+      } else {
+        // Add counter
+        diameters[diameter]++;
+      }
+    }
+
+    // TODO: add size
+    // Place diamters in vector
+    std::vector<int64_t> key;
+    std::vector<std::string *> optionString;
+    char **options = (char **)malloc((diameters.size()) * sizeof(char **));
+    int cnt = 0;
+    for (std::map<int64_t, int64_t>::iterator it = diameters.begin();
+         it != diameters.end(); ++it) {
+      key.push_back(it->first);
+      std::string *s = new std::string;
+      *s = "Diameter " + std::to_string(it->first);
+      optionString.push_back(s);
+
+      options[cnt] = s->data();
+      cnt++;
+    }
+
+    choice = choose(options, cnt + 1, 8);
+    for (int ii = 0; ii < cnt; ii++) {
+      delete optionString[ii];
+    }
+
+    // Create vector with just matching diametrs
+    int64_t diameter = key[choice];
+    std::vector<Article *> filterdArticles;
+    for (Article *article : articles) {
+      if (article->getDiameter() == diameter) {
+        filterdArticles.push_back(article);
+      }
+    }
+
+    // Finaly search
+    searchResult = search(filterdArticles, &Article::getName);
+
+  } else if (choice == 2) {
+    const static char *typeOptions[] = {"Just Tires", "Just rims", "Both"};
+    choice = choose((char **)typeOptions, 3, 8);
+    const static char type[] = {'t', 'r'};
+
+    if (choice == 2) {
+      searchResult = search(articles, &Article::getName);
+    } else {
+      // TODO: add size
+      std::vector<Article *> filterdArticles;
+      for (Article *article : articles) {
+        if (article->getType() == type[choice]) {
+          filterdArticles.push_back(article);
+        }
+      }
+
+      searchResult = search(filterdArticles, &Article::getName);
+    }
+
+  } else {
+    searchResult = search(articles, &Article::getName);
+  }
+
+  return searchResult;
+}
+
+template <typename T>
+void getSearchCorrectIndex(std::vector<T *> vec,
+                           SearchResult<T> &searchResult) {
+  T *searchItem = searchResult.item;
+  for (int ii = 0; ii < vec.size(); ii++) {
+    if (vec[ii] == searchItem) {
+      searchResult.index = ii;
+      return;
+    }
+  }
+  exit(1);
 }

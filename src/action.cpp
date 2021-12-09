@@ -120,7 +120,8 @@ void runAction(Action action, std::vector<Article *> &articles,
 void actionChangeArticle(std::vector<Article *> &articles) {
   std::string line;
 
-  SearchResult<Article> searchResult = search(articles, &Article::getName);
+  // SearchResult<Article> searchResult = search(articles, &Article::getName);
+  SearchResult<Article> searchResult = searchArticle(articles);
 
   std::cout << "Leave blank if old value is correct" << std::endl;
 
@@ -193,7 +194,9 @@ void actionPlaceOrder(std::vector<Article *> &articles,
     int stock;
     int amount = 0;
 
-    SearchResult<Article> articleSearch = search(articles, &Article::getName);
+    // SearchResult<Article> articleSearch = search(articles,
+    // &Article::getName);
+    SearchResult<Article> articleSearch = searchArticle(articles);
 
     Article *local_article = articleSearch.item->clone();
     char type = local_article->getType();
@@ -307,7 +310,8 @@ void actionUpdateStock(std::vector<Article *> &articles) {
 
   std::string line;
 
-  SearchResult<Article> searchResult = search(articles, &Article::getName);
+  // SearchResult<Article> searchResult = search(articles, &Article::getName);
+  SearchResult<Article> searchResult = searchArticle(articles);
 
   std::cout << "Leave blank if old value is correct" << std::endl;
 
@@ -391,7 +395,8 @@ void actionAddArticle(std::vector<Article *> &articles) {
 }
 
 void actionDeleteArticle(std::vector<Article *> &articles) {
-  SearchResult<Article> searchResult = search(articles, &Article::getName);
+  // SearchResult<Article> searchResult = search(articles, &Article::getName);
+  SearchResult<Article> searchResult = searchArticle(articles);
   deleteFromVec(articles, searchResult, &Article::show);
 }
 
