@@ -12,14 +12,14 @@ public:
   Customer(std::string, std::string, char);
   virtual ~Customer();
 
-  std::string getName(void);
+  std::string getName(void) const;
   void setName(std::string);
 
-  std::string getAddress(void);
+  std::string getAddress(void) const;
   void setAddress(std::string);
 
-  char getType(void);
+  char getType(void) const;
   void setType(char);
 
-  virtual void show(void);
+  virtual void show(void) const;
 };

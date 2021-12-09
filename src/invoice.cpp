@@ -21,7 +21,7 @@ Invoice::~Invoice() {
   }
 }
 
-Customer Invoice::getCustomer(void) { return this->customer; }
+Customer Invoice::getCustomer(void) const { return this->customer; }
 
 void Invoice::setCustomer(Customer customer) { this->customer = customer; }
 
@@ -29,12 +29,14 @@ void Invoice::setArticles(std::vector<Article *> articles) {
   this->articles = articles;
 }
 
-std::vector<Article *> Invoice::getArticles(void) { return this->articles; }
+std::vector<Article *> Invoice::getArticles(void) const {
+  return this->articles;
+}
 std::vector<Article *> &Invoice::getArticlesAsRef(void) {
   return this->articles;
 }
 
-float Invoice::getPrice(void) { return this->price; }
+float Invoice::getPrice(void) const { return this->price; }
 
 void Invoice::setPrice(float price) { this->price = price; }
 
@@ -54,7 +56,7 @@ float Invoice::calculatePrice() {
   return price;
 }
 
-int64_t Invoice::getDiscount(void) { return this->discount; }
+int64_t Invoice::getDiscount(void) const { return this->discount; }
 
 void Invoice::setDiscount(int64_t discount) { this->discount = discount; }
 
@@ -93,7 +95,7 @@ float Invoice::calculateDiscount() {
   return discount;
 }
 
-void Invoice::show(void) {
+void Invoice::show(void) const {
   std::cout << "=== Invoice ====" << std::endl;
   this->customer.show();
   for (Article *article : this->articles) {

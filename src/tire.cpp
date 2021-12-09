@@ -17,21 +17,21 @@ Tire::~Tire() {
 #endif
 }
 
-int64_t Tire::getWidth(void) { return this->width; }
+int64_t Tire::getWidth(void) const { return this->width; }
 void Tire::setWidth(int64_t width) { this->width = width; }
 
-int64_t Tire::getHeight(void) { return this->height; }
+int64_t Tire::getHeight(void) const { return this->height; }
 void Tire::setHeight(int64_t height) { this->height = height; }
 
-std::string Tire::getSpeedIndex(void) { return this->speedIndex; }
+std::string Tire::getSpeedIndex(void) const { return this->speedIndex; }
 void Tire::setSpeedIndex(std::string speedIndex) {
   this->speedIndex = speedIndex;
 }
 
-char Tire::getSeason(void) { return this->season; }
+char Tire::getSeason(void) const { return this->season; }
 void Tire::setSeason(char season) { this->season = season; }
 
-void Tire::show(void) {
+void Tire::show(void) const {
   std::cout << "=== Tire ===" << std::endl
             << "\tName: " << this->name << std::endl
             << "\tManufacturer: " << this->manufacturer << std::endl
@@ -44,7 +44,7 @@ void Tire::show(void) {
             << "\tPrice: " << this->price << std::endl;
 }
 
-void Tire::showSummary(void) {
+void Tire::showSummary(void) const {
   std::cout << "=== Tire ===" << std::endl
             << "\tName: " << this->name << std::endl
             << "\tStock: " << this->stock << std::endl

@@ -15,16 +15,16 @@ public:
   Rim();
   ~Rim();
 
-  bool getAluminium(void);
+  bool getAluminium(void) const;
   void setAluminium(bool);
 
-  std::string getColor(void);
+  std::string getColor(void) const;
   void setColor(std::string);
 
-  int64_t getWidth(void);
+  int64_t getWidth(void) const;
   void setWidth(int64_t);
 
-  void show(void);
-  void showSummary(void);
+  void show(void) const;
+  void showSummary(void) const;
   Article *clone(void) const;
 };

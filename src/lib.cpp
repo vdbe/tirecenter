@@ -36,7 +36,7 @@ void cleanStdin(void) {
 
 template <typename T>
 SearchResult<T> search(std::vector<T *> &vec,
-                       std::string (T::*getString)(void)) {
+                       std::string (T::*getString)(void) const) {
   // SearchResult<T> searchResult;
   unsigned int index;
   unsigned int size = vec.size();
@@ -74,13 +74,13 @@ SearchResult<T> search(std::vector<T *> &vec,
   return searchResult;
 }
 template SearchResult<Customer> search(std::vector<Customer *> &,
-                                       std::string (Customer::*)(void));
+                                       std::string (Customer::*)(void) const);
 template SearchResult<Article> search(std::vector<Article *> &,
-                                      std::string (Article::*)(void));
+                                      std::string (Article::*)(void) const);
 
 template <typename T>
 void deleteFromVec(std::vector<T *> &vec, SearchResult<T> searchResult,
-                   void (T::*summary)(void)) {
+                   void (T::*summary)(void) const) {
   char c;
 
   // Print summary of to be deleted item
@@ -99,9 +99,9 @@ void deleteFromVec(std::vector<T *> &vec, SearchResult<T> searchResult,
   vec.erase(vec.begin() + searchResult.index);
 }
 template void deleteFromVec(std::vector<Customer *> &, SearchResult<Customer>,
-                            void (Customer::*)(void));
+                            void (Customer::*)(void) const);
 template void deleteFromVec(std::vector<Article *> &, SearchResult<Article>,
-                            void (Article::*)(void));
+                            void (Article::*)(void) const);
 
 void _draw_page(char *options[], size_t size) {
   for (size_t ii = 0; ii < size; ii++) {

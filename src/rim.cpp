@@ -15,16 +15,16 @@ Rim::~Rim() {
 #endif
 }
 
-bool Rim::getAluminium(void) { return this->aluminium; }
+bool Rim::getAluminium(void) const { return this->aluminium; }
 void Rim::setAluminium(bool aluminium) { this->aluminium = aluminium; }
 
-std::string Rim::getColor(void) { return this->color; }
+std::string Rim::getColor(void) const { return this->color; }
 void Rim::setColor(std::string color) { this->color = color; }
 
-int64_t Rim::getWidth(void) { return this->width; }
+int64_t Rim::getWidth(void) const { return this->width; }
 void Rim::setWidth(int64_t width) { this->width = width; }
 
-void Rim::show(void) {
+void Rim::show(void) const {
   std::cout << "=== Rim ===" << std::endl
             << "\tName: " << this->name << std::endl
             << "\tManufacturer: " << this->manufacturer << std::endl
@@ -37,7 +37,7 @@ void Rim::show(void) {
             << "\tPrice: " << this->price << std::endl;
 }
 
-void Rim::showSummary(void) {
+void Rim::showSummary(void) const {
   std::cout << "=== Rim ===" << std::endl
             << "\tName: " << this->name << std::endl
             << "\tStock: " << this->stock << std::endl

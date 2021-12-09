@@ -15,17 +15,17 @@ Company::~Company() {
 #endif
 }
 
-std::string Company::getVAT(void) { return this->vat; }
+std::string Company::getVAT(void) const { return this->vat; }
 
 void Company::setVAT(std::string vat) { this->vat = vat; }
 
-int64_t Company::getVolumeDiscount(void) { return this->volumeDiscount; }
+int64_t Company::getVolumeDiscount(void) const { return this->volumeDiscount; }
 
 void Company::setVolumeDiscount(int64_t volumeDiscount) {
   this->volumeDiscount = volumeDiscount;
 }
 
-void Company::show(void) {
+void Company::show(void) const {
   std::cout << "=== Company ===" << std::endl
             << "\tName: " << this->name << std::endl
             << "\tAddress: " << this->address << std::endl

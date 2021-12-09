@@ -41,17 +41,21 @@ TireCenter::~TireCenter() {
 }
 
 /* getters and setter */
-std::string TireCenter::getName(void) { return this->name; }
+std::string TireCenter::getName(void) const { return this->name; }
 
 void TireCenter::setName(std::string name) { this->name = name; }
 
-std::string TireCenter::getAddress(void) { return this->address; }
+std::string TireCenter::getAddress(void) const { return this->address; }
 
 void TireCenter::setAddress(std::string address) { this->address = address; }
 
-std::vector<Article *> TireCenter::getArticles() { return this->articles; }
+std::vector<Article *> TireCenter::getArticles(void) const {
+  return this->articles;
+}
 
-std::vector<Article *> &TireCenter::getArticlesRef() { return this->articles; }
+std::vector<Article *> &TireCenter::getArticlesRef(void) {
+  return this->articles;
+}
 
 void TireCenter::setArticles(std::vector<Article *> articles) {
   this->articles = articles;
@@ -61,9 +65,11 @@ void TireCenter::addArticle(Article *article) {
   this->articles.push_back(article);
 }
 
-std::vector<Customer *> TireCenter::getCustomers() { return this->customers; }
+std::vector<Customer *> TireCenter::getCustomers(void) const {
+  return this->customers;
+}
 
-std::vector<Customer *> &TireCenter::getCustomersRef() {
+std::vector<Customer *> &TireCenter::getCustomersRef(void) {
   return this->customers;
 }
 
@@ -75,7 +81,9 @@ void TireCenter::addCustomer(Customer *customer) {
   this->customers.push_back(customer);
 }
 
-std::vector<Invoice *> TireCenter::getInvoices() { return this->invoices; }
+std::vector<Invoice *> TireCenter::getInvoices() const {
+  return this->invoices;
+}
 std::vector<Invoice *> &TireCenter::getInvoicesRef() { return this->invoices; }
 
 void TireCenter::setInvoices(std::vector<Invoice *> invoices) {

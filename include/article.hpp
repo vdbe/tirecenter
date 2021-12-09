@@ -17,25 +17,25 @@ public:
   Article(std::string, std::string, int64_t, int64_t, float, char);
   virtual ~Article();
 
-  std::string getName(void);
+  std::string getName(void) const;
   void setName(std::string);
 
-  std::string getManufacturer(void);
+  std::string getManufacturer(void) const;
   void setManufacturer(std::string);
 
-  int64_t getStock(void);
+  int64_t getStock(void) const;
   void setStock(int64_t);
 
-  int64_t getDiameter(void);
+  int64_t getDiameter(void) const;
   void setDiameter(int64_t);
 
-  float getPrice(void);
+  float getPrice(void) const;
   void setPrice(float);
 
-  char getType(void);
+  char getType(void) const;
   void setType(char);
 
-  virtual void show(void);
-  virtual void showSummary(void);
+  virtual void show(void) const;
+  virtual void showSummary(void) const;
   virtual Article *clone(void) const;
 };

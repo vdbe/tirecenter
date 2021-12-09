@@ -16,19 +16,19 @@ public:
        int64_t, std::string, char);
   ~Tire();
 
-  int64_t getWidth(void);
+  int64_t getWidth(void) const;
   void setWidth(int64_t);
 
-  int64_t getHeight(void);
+  int64_t getHeight(void) const;
   void setHeight(int64_t);
 
-  std::string getSpeedIndex(void);
+  std::string getSpeedIndex(void) const;
   void setSpeedIndex(std::string);
 
-  char getSeason(void);
+  char getSeason(void) const;
   void setSeason(char);
 
-  void show(void);
-  void showSummary(void);
+  void show(void) const;
+  void showSummary(void) const;
   Article *clone(void) const;
 };
