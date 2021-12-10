@@ -10,6 +10,8 @@
 #include "rim.hpp"
 #include "tire.hpp"
 
+namespace action {
+
 inline const char *userTypeToCharArray(UserType userType) {
   return USERTYPE_STRING[static_cast<size_t>(userType)];
 }
@@ -41,7 +43,7 @@ Action chooseAction(UserType user) {
   }
   options[len] = (char *)actionToCharArray(Action::exitMenu);
 
-  action = static_cast<Action>(choose(options, len + 1, 8));
+  action = static_cast<Action>(lib::choose(options, len + 1, 8));
 
   free(options);
   return action;
@@ -54,7 +56,7 @@ UserType getUserType(void) {
 
   options[0] = (char *)userTypeToCharArray(UserType::employee);
   options[1] = (char *)userTypeToCharArray(UserType::owner);
-  choice = choose((char **)options, 2, 8);
+  choice = lib::choose((char **)options, 2, 8);
 
   switch (choice) {
   case 0:
@@ -121,7 +123,7 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   std::string line;
 
   // SearchResult<Article> searchResult = search(articles, &Article::getName);
-  SearchResult<Article> searchResult = searchArticle(articles);
+  lib::SearchResult<Article> searchResult = lib::searchArticle(articles);
 
   if (searchResult.item == NULL) {
     std::cout << "No matching items" << std::endl;
@@ -150,7 +152,7 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   std::cout << searchResult.item->getDiameter() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
-  if (line != "" && stringIsInt(line)) {
+  if (line != "" && lib::stringIsInt(line)) {
     searchResult.item->setDiameter(std::stoi(line));
   }
 
@@ -158,7 +160,7 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   std::cout << searchResult.item->getType() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
-  if (line != "" && stringIsInt(line)) {
+  if (line != "" && lib::stringIsInt(line)) {
     searchResult.item->setType(line[0]);
   }
 
@@ -166,7 +168,7 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   std::cout << searchResult.item->getStock() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
-  if (line != "" && stringIsInt(line)) {
+  if (line != "" && lib::stringIsInt(line)) {
     searchResult.item->setStock(std::stoi(line));
   }
 
@@ -174,7 +176,7 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   std::cout << searchResult.item->getPrice() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
-  if (line != "" && stringIsFloat(line)) {
+  if (line != "" && lib::stringIsFloat(line)) {
     searchResult.item->setStock(std::stof(line));
   }
 }
@@ -193,7 +195,7 @@ void actionPlaceOrder(std::vector<Article *> &articles,
   std::vector<Article *> order_articles = invoice->getArticlesAsRef();
   // SearchResult<Customer> customerSearch = search(customers,
   // &Customer::getName);
-  SearchResult<Customer> customerSearch = searchCustomer(customers);
+  lib::SearchResult<Customer> customerSearch = lib::searchCustomer(customers);
 
   if (customerSearch.item == NULL) {
     std::cout << "No matching items" << std::endl;
@@ -208,7 +210,7 @@ void actionPlaceOrder(std::vector<Article *> &articles,
 
     // SearchResult<Article> articleSearch = search(articles,
     // &Article::getName);
-    SearchResult<Article> articleSearch = searchArticle(articles);
+    lib::SearchResult<Article> articleSearch = lib::searchArticle(articles);
 
     if (articleSearch.item == NULL) {
       std::cout << "No matching items" << std::endl;
@@ -251,7 +253,7 @@ void actionPlaceOrder(std::vector<Article *> &articles,
 
     std::cout << "Add another article? [y/n]: ";
     std::cin >> c;
-    cleanStdin();
+    lib::cleanStdin();
   } while (c == 'y');
 
   // TODO : Check if both are needed invoice.calculatePrice();
@@ -265,7 +267,7 @@ void actionChangeCustomer(std::vector<Customer *> &customers) {
 
   // SearchResult<Customer> searchResult = search(customers,
   // &Customer::getName);
-  SearchResult<Customer> searchResult = searchCustomer(customers);
+  lib::SearchResult<Customer> searchResult = lib::searchCustomer(customers);
 
   if (searchResult.item == NULL) {
     std::cout << "No matching items" << std::endl;
@@ -335,7 +337,7 @@ void actionUpdateStock(std::vector<Article *> &articles) {
   std::string line;
 
   // SearchResult<Article> searchResult = search(articles, &Article::getName);
-  SearchResult<Article> searchResult = searchArticle(articles);
+  lib::SearchResult<Article> searchResult = lib::searchArticle(articles);
 
   if (searchResult.item == NULL) {
     std::cout << "No matching items" << std::endl;
@@ -348,7 +350,7 @@ void actionUpdateStock(std::vector<Article *> &articles) {
   std::cout << searchResult.item->getStock() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
-  if (line != "" && stringIsInt(line)) {
+  if (line != "" && lib::stringIsInt(line)) {
     searchResult.item->setStock(std::stoi(line));
   }
 }
@@ -420,12 +422,12 @@ void actionAddArticle(std::vector<Article *> &articles) {
     articles.push_back(article);
   }
 
-  cleanStdin();
+  lib::cleanStdin();
 }
 
 void actionDeleteArticle(std::vector<Article *> &articles) {
   // SearchResult<Article> searchResult = search(articles, &Article::getName);
-  SearchResult<Article> searchResult = searchArticle(articles);
+  lib::SearchResult<Article> searchResult = lib::searchArticle(articles);
 
   if (searchResult.item == NULL) {
     std::cout << "No matching items" << std::endl;
@@ -438,7 +440,7 @@ void actionDeleteArticle(std::vector<Article *> &articles) {
 void actionDeleteCustomer(std::vector<Customer *> &customers) {
   // SearchResult<Customer> searchResult = search(customers,
   // &Customer::getName);
-  SearchResult<Customer> searchResult = searchCustomer(customers);
+  lib::SearchResult<Customer> searchResult = lib::searchCustomer(customers);
 
   if (searchResult.item == NULL) {
     std::cout << "No matching items" << std::endl;
@@ -447,3 +449,5 @@ void actionDeleteCustomer(std::vector<Customer *> &customers) {
 
   deleteFromVec(customers, searchResult, &Customer::show);
 }
+
+} // namespace action

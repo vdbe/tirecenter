@@ -35,8 +35,8 @@ int main(int argc, char **argv) {
     fill(&tc, 20);
   }
 
-  Action action;
-  const UserType user = getUserType();
+  action::Action action;
+  const action::UserType user = action::getUserType();
 
   std::vector<Customer *> &customers = tc.getCustomersRef();
   std::vector<Invoice *> &invoices = tc.getInvoicesRef();
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
   do {
     action = chooseAction(user);
     runAction(action, articles, customers, invoices);
-  } while (action != Action::exitMenu);
+  } while (action != action::Action::exitMenu);
 
   // Save 'db'
   tcdb::save(tc, file);

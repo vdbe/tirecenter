@@ -10,6 +10,8 @@
 #include "customer.hpp"
 #include "lib.hpp"
 
+namespace lib {
+
 bool stringIsInt(const std::string &str) {
   for (char const &c : str) {
     if (std::isdigit(c) == 0)
@@ -285,7 +287,7 @@ template <typename T>
 void getCorrectSearchIndex(std::vector<T *> &vec,
                            SearchResult<T> &searchResult) {
   T *searchItem = searchResult.item;
-  for (int ii = 0; ii < vec.size(); ii++) {
+  for (uint64_t ii = 0; ii < vec.size(); ii++) {
     if (vec[ii] == searchItem) {
       searchResult.index = ii;
       return;
@@ -296,3 +298,5 @@ template void getCorrectSearchIndex(std::vector<Article *> &,
                                     SearchResult<Article> &);
 template void getCorrectSearchIndex(std::vector<Customer *> &,
                                     SearchResult<Customer> &);
+
+} // namespace lib

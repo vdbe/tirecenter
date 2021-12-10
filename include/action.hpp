@@ -5,6 +5,8 @@ class Article;
 class Invoice;
 class Customer;
 
+namespace action {
+
 enum class UserType { employee = 0, owner, _LENGTH };
 [[maybe_unused]] static const char *USERTYPE_STRING[] = {"owner", "employee"};
 static_assert(sizeof(USERTYPE_STRING) / sizeof(USERTYPE_STRING[0]) ==
@@ -52,3 +54,5 @@ void actionUpdateStock(std::vector<Article *> &);
 void actionAddArticle(std::vector<Article *> &);
 void actionDeleteArticle(std::vector<Article *> &);
 void actionDeleteCustomer(std::vector<Customer *> &);
+
+} // namespace action

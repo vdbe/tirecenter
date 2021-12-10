@@ -13,6 +13,8 @@
 class Article;
 class Customer;
 
+namespace lib {
+
 template <typename T> struct SearchResult {
   unsigned int index;
   T *item;
@@ -38,3 +40,5 @@ void getCorrectSearchIndex(std::vector<T *> &, SearchResult<T> &);
 
 SearchResult<Article> searchArticle(std::vector<Article *> &);
 SearchResult<Customer> searchCustomer(std::vector<Customer *> &);
+
+} // namespace lib
