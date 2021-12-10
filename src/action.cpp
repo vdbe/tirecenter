@@ -123,6 +123,11 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   // SearchResult<Article> searchResult = search(articles, &Article::getName);
   SearchResult<Article> searchResult = searchArticle(articles);
 
+  if (searchResult.item == NULL) {
+    std::cout << "No matching items" << std::endl;
+    return;
+  }
+
   std::cout << "Leave blank if old value is correct" << std::endl;
 
   std::cout << "Name: ";
@@ -186,7 +191,14 @@ void actionPlaceOrder(std::vector<Article *> &articles,
   Invoice *invoice = new Invoice;
   char c;
   std::vector<Article *> order_articles = invoice->getArticlesAsRef();
-  SearchResult<Customer> customerSearch = search(customers, &Customer::getName);
+  // SearchResult<Customer> customerSearch = search(customers,
+  // &Customer::getName);
+  SearchResult<Customer> customerSearch = searchCustomer(customers);
+
+  if (customerSearch.item == NULL) {
+    std::cout << "No matching items" << std::endl;
+    return;
+  }
 
   invoice->setCustomer(*customerSearch.item);
 
@@ -197,6 +209,11 @@ void actionPlaceOrder(std::vector<Article *> &articles,
     // SearchResult<Article> articleSearch = search(articles,
     // &Article::getName);
     SearchResult<Article> articleSearch = searchArticle(articles);
+
+    if (articleSearch.item == NULL) {
+      std::cout << "No matching items" << std::endl;
+      return;
+    }
 
     Article *local_article = articleSearch.item->clone();
     char type = local_article->getType();
@@ -246,7 +263,14 @@ void actionPlaceOrder(std::vector<Article *> &articles,
 void actionChangeCustomer(std::vector<Customer *> &customers) {
   std::string line;
 
-  SearchResult<Customer> searchResult = search(customers, &Customer::getName);
+  // SearchResult<Customer> searchResult = search(customers,
+  // &Customer::getName);
+  SearchResult<Customer> searchResult = searchCustomer(customers);
+
+  if (searchResult.item == NULL) {
+    std::cout << "No matching items" << std::endl;
+    return;
+  }
 
   std::cout << "Leave blank if old value is correct" << std::endl;
 
@@ -312,6 +336,11 @@ void actionUpdateStock(std::vector<Article *> &articles) {
 
   // SearchResult<Article> searchResult = search(articles, &Article::getName);
   SearchResult<Article> searchResult = searchArticle(articles);
+
+  if (searchResult.item == NULL) {
+    std::cout << "No matching items" << std::endl;
+    return;
+  }
 
   std::cout << "Leave blank if old value is correct" << std::endl;
 
@@ -397,10 +426,24 @@ void actionAddArticle(std::vector<Article *> &articles) {
 void actionDeleteArticle(std::vector<Article *> &articles) {
   // SearchResult<Article> searchResult = search(articles, &Article::getName);
   SearchResult<Article> searchResult = searchArticle(articles);
+
+  if (searchResult.item == NULL) {
+    std::cout << "No matching items" << std::endl;
+    return;
+  }
+
   deleteFromVec(articles, searchResult, &Article::show);
 }
 
 void actionDeleteCustomer(std::vector<Customer *> &customers) {
-  SearchResult<Customer> searchResult = search(customers, &Customer::getName);
+  // SearchResult<Customer> searchResult = search(customers,
+  // &Customer::getName);
+  SearchResult<Customer> searchResult = searchCustomer(customers);
+
+  if (searchResult.item == NULL) {
+    std::cout << "No matching items" << std::endl;
+    return;
+  }
+
   deleteFromVec(customers, searchResult, &Customer::show);
 }
