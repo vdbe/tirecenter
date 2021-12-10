@@ -11,6 +11,7 @@
 #include <vector>
 
 class Article;
+class Customer;
 
 template <typename T> struct SearchResult {
   unsigned int index;
@@ -33,6 +34,7 @@ size_t choose(char **, size_t, size_t);
 void _draw_page(char **, size_t);
 
 SearchResult<Article> searchArticle(std::vector<Article *> &);
+SearchResult<Customer> searchCustomer(std::vector<Customer *> &);
 
 template <typename T>
 void getCorrectSearchIndex(std::vector<T *> &, SearchResult<T> &);

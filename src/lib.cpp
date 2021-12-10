@@ -223,6 +223,7 @@ SearchResult<Article> searchArticle(std::vector<Article *> &articles) {
 
     // Finaly search
     searchResult = search(filterdArticles, &Article::getName);
+    getCorrectSearchIndex(articles, searchResult);
 
   } else if (choice == 2) {
     const static char *typeOptions[] = {"Just Tires", "Just rims", "Both"};
@@ -232,7 +233,6 @@ SearchResult<Article> searchArticle(std::vector<Article *> &articles) {
     if (choice == 2) {
       searchResult = search(articles, &Article::getName);
     } else {
-      // TODO: add size
       std::vector<Article *> filterdArticles;
       for (Article *article : articles) {
         if (article->getType() == type[choice]) {
@@ -241,6 +241,7 @@ SearchResult<Article> searchArticle(std::vector<Article *> &articles) {
       }
 
       searchResult = search(filterdArticles, &Article::getName);
+      getCorrectSearchIndex(articles, searchResult);
     }
 
   } else {
@@ -250,8 +251,31 @@ SearchResult<Article> searchArticle(std::vector<Article *> &articles) {
   return searchResult;
 }
 
+SearchResult<Customer> searchCustomer(std::vector<Customer *> &customers) {
+  SearchResult<Customer> searchResult;
+  const static char *typeOptions[] = {"Companies", "Private cuctomers", "Both"};
+  const static char type[] = {'c', 'b'};
+
+  int choice = choose((char **)typeOptions, 3, 8);
+  if (choice == 2) {
+    searchResult = search(customers, &Customer::getName);
+  } else {
+    std::vector<Customer *> filterdCustomers;
+    for (Customer *customer : customers) {
+      if (customer->getType() == type[choice]) {
+        filterdCustomers.push_back(customer);
+      }
+    }
+
+    searchResult = search(filterdCustomers, &Customer::getName);
+    getCorrectSearchIndex(customers, searchResult);
+  }
+
+  return searchResult;
+}
+
 template <typename T>
-void getSearchCorrectIndex(std::vector<T *> vec,
+void getCorrectSearchIndex(std::vector<T *> vec,
                            SearchResult<T> &searchResult) {
   T *searchItem = searchResult.item;
   for (int ii = 0; ii < vec.size(); ii++) {
@@ -262,3 +286,7 @@ void getSearchCorrectIndex(std::vector<T *> vec,
   }
   exit(1);
 }
+template void getCorrectSearchIndex(std::vector<Article *> &,
+                                    SearchResult<Article> &);
+template void getCorrectSearchIndex(std::vector<Customer *> &,
+                                    SearchResult<Customer> &);

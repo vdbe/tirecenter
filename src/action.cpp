@@ -186,7 +186,9 @@ void actionPlaceOrder(std::vector<Article *> &articles,
   Invoice *invoice = new Invoice;
   char c;
   std::vector<Article *> order_articles = invoice->getArticlesAsRef();
-  SearchResult<Customer> customerSearch = search(customers, &Customer::getName);
+  // SearchResult<Customer> customerSearch = search(customers,
+  // &Customer::getName);
+  SearchResult<Customer> customerSearch = searchCustomer(customers);
 
   invoice->setCustomer(*customerSearch.item);
 
@@ -246,7 +248,9 @@ void actionPlaceOrder(std::vector<Article *> &articles,
 void actionChangeCustomer(std::vector<Customer *> &customers) {
   std::string line;
 
-  SearchResult<Customer> searchResult = search(customers, &Customer::getName);
+  // SearchResult<Customer> searchResult = search(customers,
+  // &Customer::getName);
+  SearchResult<Customer> searchResult = searchCustomer(customers);
 
   std::cout << "Leave blank if old value is correct" << std::endl;
 
@@ -401,6 +405,9 @@ void actionDeleteArticle(std::vector<Article *> &articles) {
 }
 
 void actionDeleteCustomer(std::vector<Customer *> &customers) {
-  SearchResult<Customer> searchResult = search(customers, &Customer::getName);
+  // SearchResult<Customer> searchResult = search(customers,
+  // &Customer::getName);
+  SearchResult<Customer> searchResult = searchCustomer(customers);
+
   deleteFromVec(customers, searchResult, &Customer::show);
 }
