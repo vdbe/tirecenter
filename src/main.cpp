@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
 void fill(TireCenter *tc, int count) {
   {
     std::vector<Article *> articles(count);
-    for (int ii = 0; ii < count; ii++) {
+    for (int64_t ii = 0; ii < count; ii++) {
       Tire *article = new Tire;
       std::ostringstream ss;
 
