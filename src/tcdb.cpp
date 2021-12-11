@@ -16,7 +16,7 @@ void load(TireCenter &tireCenter, std::string inFileName) {
   // 1 byte extra
   char buffer[9];
 
-  std::ifstream ifile{inFileName, std::ios::out | std::ios::binary};
+  std::ifstream ifile{inFileName, std::ios::in | std::ios::binary};
 
   // Check magic bytes
   ifile.read(buffer, 8);
@@ -202,10 +202,14 @@ Article *loadArticle(std::ifstream &ifile) {
                         aluminium, color, width);
     return tire;
   } else {
-    // Weird type
+    // NOTE: Article is an abtract class
+    std::cout << "Can't construct an Article" << std::endl;
+    exit(1);
+    /*
     Article *article =
-        new Article(name, manufacturer, stock, diameter, price, type);
+       new Article(name, manufacturer, stock, diameter, price, type);
     return article;
+    */
   }
 }
 
@@ -290,9 +294,7 @@ Invoice *loadInvoice(std::ifstream &ifile) {
   Invoice *invoice = new Invoice;
 
   // Load customer
-  Customer *customer_ptr = loadCustomer(ifile);
-  Customer customer = *customer_ptr;
-  delete customer_ptr;
+  Customer *customer = loadCustomer(ifile);
   invoice->setCustomer(customer);
 
   // Load articles
@@ -312,11 +314,11 @@ Invoice *loadInvoice(std::ifstream &ifile) {
 }
 
 void saveInvoice(Invoice *invoice, std::ofstream &ofile) {
-  Customer customer = invoice->getCustomer();
+  Customer *customer = invoice->getCustomer();
   float price = invoice->getPrice();
   int64_t discount = invoice->getDiscount();
 
-  saveCustomer(&customer, ofile);
+  saveCustomer(customer, ofile);
   saveArticles(invoice->getArticlesAsRef(), ofile);
   ofile.write((char *)&price, sizeof(float));
   ofile.write((char *)&discount, sizeof(int64_t));

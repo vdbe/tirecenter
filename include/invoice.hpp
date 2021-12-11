@@ -9,7 +9,7 @@ class Article;
 
 class Invoice {
 private:
-  Customer customer;
+  Customer *customer;
   // TODO: Try to replace this with std::array<>
   std::vector<Article *> articles;
   float price;
@@ -17,11 +17,11 @@ private:
 
 public:
   Invoice();
-  Invoice(Customer, std::vector<Article *>, float, int64_t);
+  Invoice(Customer *, std::vector<Article *>, float, int64_t);
   ~Invoice();
 
-  Customer getCustomer(void) const;
-  void setCustomer(Customer);
+  Customer *getCustomer(void) const;
+  void setCustomer(Customer *);
 
   std::vector<Article *> getArticles() const;
   std::vector<Article *> &getArticlesAsRef();

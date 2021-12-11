@@ -30,3 +30,5 @@ void Customer::show(void) const {
             << "\tAddress: " << this->address << std::endl
             << "\tType: " << this->type << std::endl;
 }
+
+Customer *Customer::clone(void) const { return new Customer(*this); }

@@ -3,11 +3,12 @@
 #include <vector>
 
 #include "article.hpp"
+#include "company.hpp"
 #include "customer.hpp"
 #include "invoice.hpp"
 
 Invoice::Invoice() {}
-Invoice::Invoice(Customer customer, std::vector<Article *> articles,
+Invoice::Invoice(Customer *customer, std::vector<Article *> articles,
                  float price, int64_t discount)
     : customer(customer), articles(articles), price(price), discount(discount) {
 }
@@ -16,14 +17,16 @@ Invoice::~Invoice() {
 #ifdef PRINT_DESTRUCTORS
   std::cout << "Invoice::~Invoice()" << std::endl;
 #endif
+  delete this->customer;
+
   for (Article *article : this->articles) {
     delete article;
   }
 }
 
-Customer Invoice::getCustomer(void) const { return this->customer; }
+Customer *Invoice::getCustomer(void) const { return this->customer; }
 
-void Invoice::setCustomer(Customer customer) { this->customer = customer; }
+void Invoice::setCustomer(Customer *customer) { this->customer = customer; }
 
 void Invoice::setArticles(std::vector<Article *> articles) {
   this->articles = articles;
@@ -47,7 +50,7 @@ float Invoice::calculatePrice() {
     price += article->getPrice() * article->getStock();
   }
 
-  if (this->customer.getType() == 'c') {
+  if (this->customer->getType() == 'c') {
     price *= 1.21;
   }
 
@@ -61,13 +64,17 @@ int64_t Invoice::getDiscount(void) const { return this->discount; }
 void Invoice::setDiscount(int64_t discount) { this->discount = discount; }
 
 float Invoice::calculateDiscount() {
-  char type = this->customer.getType();
+  char type = this->customer->getType();
   float discount = 0;
 
   if (type == 'b') {
     for (Article *article : this->articles) {
+      Company *company = dynamic_cast<Company *>(this->customer);
+      int64_t volumeDiscount = company->getVolumeDiscount();
+
       if (article->getStock() >= 10) {
-        discount += (article->getPrice() + article->getStock()) * 0.1;
+        discount += (article->getPrice() + article->getStock()) *
+                    (0.01 * volumeDiscount);
       }
     }
   } else if (type == 'c') {
@@ -97,7 +104,7 @@ float Invoice::calculateDiscount() {
 
 void Invoice::show(void) const {
   std::cout << "=== Invoice ====" << std::endl;
-  this->customer.show();
+  this->customer->show();
   for (Article *article : this->articles) {
     article->show();
   }

@@ -33,3 +33,5 @@ void Company::show(void) const {
             << "\tVolume Discount: " << this->volumeDiscount << std::endl
             << "\tType: " << this->type << std::endl;
 }
+
+Customer *Company::clone(void) const { return new Company(*this); }

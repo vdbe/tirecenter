@@ -35,6 +35,7 @@ void Article::setPrice(float price) { this->price = price; }
 char Article::getType(void) const { return this->type; }
 void Article::setType(char type) { this->type = type; }
 
+/*
 void Article::show(void) const {
   std::cout << "=== Article ===" << std::endl
             << "\tName: " << this->name << std::endl
@@ -53,3 +54,4 @@ void Article::showSummary(void) const {
 }
 
 Article *Article::clone(void) const { return new Article(*this); }
+*/

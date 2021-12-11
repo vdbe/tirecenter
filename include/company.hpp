@@ -20,4 +20,5 @@ public:
   void setVolumeDiscount(int64_t);
 
   void show(void) const;
+  Customer *clone(void) const;
 };

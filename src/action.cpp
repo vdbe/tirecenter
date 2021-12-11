@@ -1,4 +1,5 @@
 #include "action.hpp"
+#include "tcdb.hpp"
 
 #include <vector>
 
@@ -156,10 +157,13 @@ void actionChangeArticle(std::vector<Article *> &articles) {
     searchResult.item->setDiameter(std::stoi(line));
   }
 
+  // NOTE: type schould never change
+  /*
   std::cout << "Type: ";
   std::cout << searchResult.item->getType() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
+  */
   if (line != "" && lib::stringIsInt(line)) {
     searchResult.item->setType(line[0]);
   }
@@ -202,7 +206,7 @@ void actionPlaceOrder(std::vector<Article *> &articles,
     return;
   }
 
-  invoice->setCustomer(*customerSearch.item);
+  invoice->setCustomer(customerSearch.item->clone());
 
   do {
     int stock;
@@ -242,7 +246,6 @@ void actionPlaceOrder(std::vector<Article *> &articles,
 
     // Check if their is enough stock
     stock = articleSearch.item->getStock();
-    std::cout << stock << std::endl;
     if (amount <= stock) {
       articleSearch.item->setStock(stock - amount);
       order_articles.push_back(local_article);
@@ -251,12 +254,20 @@ void actionPlaceOrder(std::vector<Article *> &articles,
                 << "current stock: " << stock << std::endl;
     }
 
-    std::cout << "Add another article? [y/n]: ";
-    std::cin >> c;
-    lib::cleanStdin();
+    if (order_articles.size() > 0) {
+      std::cout << "Add another article? [y/n]: ";
+      std::cin >> c;
+      lib::cleanStdin();
+    } else {
+      c = 'y';
+    }
   } while (c == 'y');
 
-  // TODO : Check if both are needed invoice.calculatePrice();
+  std::ofstream ofile{"plzword.tcdb", std::ios::out | std::ios::binary};
+  invoice->show();
+  tcdb::_::saveInvoice(invoice, ofile);
+  ofile.close();
+  invoice->calculatePrice();
   invoice->calculateDiscount();
 
   invoices.push_back(invoice);
@@ -292,12 +303,31 @@ void actionChangeCustomer(std::vector<Customer *> &customers) {
     searchResult.item->setAddress(line);
   }
 
+  // NOTE: type schould never change
+  /*
   std::cout << "Type: ";
   std::cout << searchResult.item->getType() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
   if (line != "") {
     searchResult.item->setType(line[0]);
+  }
+  */
+
+  if (searchResult.item->getType() == 'b') {
+    Company *company = dynamic_cast<Company *>(searchResult.item);
+
+    std::cout << "VAT: ";
+    std::getline(std::cin, line);
+    if (line != "") {
+      company->setVAT(line);
+    }
+
+    std::cout << "Volume discount: ";
+    std::getline(std::cin, line);
+    if (line != "" && lib::stringIsInt(line)) {
+      company->setVolumeDiscount(std::stoi(line));
+    }
   }
 }
 
@@ -317,6 +347,7 @@ void actionAddCustomer(std::vector<Customer *> &customers) {
   if (type == 'b') {
     std::string vat;
     int64_t volumeDiscount;
+    std::cin.ignore();
 
     std::cout << "VAT: ";
     std::getline(std::cin, vat);
@@ -330,6 +361,8 @@ void actionAddCustomer(std::vector<Customer *> &customers) {
     Customer *customer = new Customer(name, address, type);
     customers.push_back(customer);
   }
+
+  lib::cleanStdin();
 }
 
 void actionUpdateStock(std::vector<Article *> &articles) {
@@ -417,9 +450,10 @@ void actionAddArticle(std::vector<Article *> &articles) {
                        aluminium, color, width);
     articles.push_back(rim);
   } else {
-    Article *article =
-        new Article(name, manufacturer, stock, diameter, price, type);
-    articles.push_back(article);
+    // NOTE: Article is an abstract class
+    // Article *article =
+    //    new Article(name, manufacturer, stock, diameter, price, type);
+    // articles.push_back(article);
   }
 
   lib::cleanStdin();

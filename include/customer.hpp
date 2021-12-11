@@ -22,4 +22,5 @@ public:
   void setType(char);
 
   virtual void show(void) const;
+  virtual Customer *clone(void) const;
 };

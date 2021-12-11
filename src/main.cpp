@@ -2,6 +2,7 @@
 
 #include "action.hpp"
 #include "article.hpp"
+#include "company.hpp"
 #include "rim.hpp"
 #include "tcdb.hpp"
 #include "tire.hpp"
@@ -101,6 +102,15 @@ void fill(TireCenter *tc, int count) {
     }
     tc->setCustomers(customers);
   }
+
+  Company *company = new Company();
+  company->setName("Company 1");
+  company->setAddress("abc street 1");
+  company->setVAT("abcd");
+  company->setType('b');
+  company->setVolumeDiscount(7);
+
+  tc->addCustomer(company);
 
   // TODO: fill TireCenter::invoices
 }

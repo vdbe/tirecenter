@@ -35,7 +35,7 @@ public:
   char getType(void) const;
   void setType(char);
 
-  virtual void show(void) const;
-  virtual void showSummary(void) const;
-  virtual Article *clone(void) const;
+  virtual void show(void) const = 0;
+  virtual void showSummary(void) const = 0;
+  virtual Article *clone(void) const = 0;
 };

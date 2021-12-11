@@ -262,7 +262,7 @@ SearchResult<Article> searchArticle(std::vector<Article *> &articles) {
 
 SearchResult<Customer> searchCustomer(std::vector<Customer *> &customers) {
   SearchResult<Customer> searchResult;
-  const static char *typeOptions[] = {"Companies", "Private cuctomers", "Both"};
+  const static char *typeOptions[] = {"Private customer", "Companies", "Both"};
   const static char type[] = {'c', 'b'};
 
   int choice = choose((char **)typeOptions, 3, 8);
