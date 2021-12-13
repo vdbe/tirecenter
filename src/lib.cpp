@@ -220,6 +220,7 @@ SearchResult<Article> searchArticle(std::vector<Article *> &articles) {
     for (int ii = 0; ii < cnt; ii++) {
       delete optionString[ii];
     }
+    free(options);
 
     // Create vector with just matching diametrs
     int64_t diameter = key[choice];
