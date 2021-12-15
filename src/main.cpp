@@ -21,6 +21,21 @@ int main(int argc, char **argv) {
   // Get 'db' location
   if (argc > 1) {
     file = argv[1];
+    if (file == "-h" || file == "-?" || file == "--help") {
+      std::cout << "Usage:" << std::endl
+                << "\t" << argv[0] << " [tcdb file]" << std::endl
+                << std::endl
+                << "META OPTIONS" << std::endl
+                << "\t"
+                << "-?, -h, --help"
+                << "\t\t"
+                << "This menu" << std::endl
+                << "\t-v, --version\t\tShow version info" << std::endl;
+      exit(0);
+    } else if (file == "-v" || file == "--version") {
+      std::cout << "Version: " << tcdb::VERSION << std::endl;
+      exit(0);
+    }
   } else {
     file = "test.tcdb";
   }
