@@ -9,6 +9,9 @@
 #include "article.hpp"
 #include "customer.hpp"
 #include "lib.hpp"
+#include <algorithm>
+#include <cctype>
+#include <locale>
 
 namespace lib {
 
@@ -35,6 +38,25 @@ bool stringIsFloat(const std::string &str) {
 void cleanStdin(void) {
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+// SRC: https://stackoverflow.com/questions/216823/how-to-trim-a-stdstring
+void ltrim(std::string &s) {
+  s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+            return !std::isspace(ch);
+          }));
+}
+
+void rtrim(std::string &s) {
+  s.erase(std::find_if(s.rbegin(), s.rend(),
+                       [](unsigned char ch) { return !std::isspace(ch); })
+              .base(),
+          s.end());
+}
+
+void trim(std::string &s) {
+  ltrim(s);
+  rtrim(s);
 }
 
 template <typename T>
@@ -299,5 +321,21 @@ template void getCorrectSearchIndex(std::vector<Article *> &,
                                     SearchResult<Article> &);
 template void getCorrectSearchIndex(std::vector<Customer *> &,
                                     SearchResult<Customer> &);
+
+template <typename T, typename U>
+bool checkIfExists(std::vector<T *> vec, U value_to_check,
+                   U (T::*fun)(void) const) {
+  for (T *item : vec) {
+    if ((item->*fun)() == value_to_check) {
+      return true;
+    }
+  }
+
+  return false;
+}
+template bool checkIfExists(std::vector<Customer *>, std::string,
+                            std::string (Customer::*)(void) const);
+template bool checkIfExists(std::vector<Article *>, std::string,
+                            std::string (Article::*)(void) const);
 
 } // namespace lib

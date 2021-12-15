@@ -25,6 +25,10 @@ void cleanStdin(void);
 bool stringIsInt(const std::string &);
 bool stringIsFloat(const std::string &);
 
+void ltrim(std::string &);
+void rtrim(std::string &);
+void trim(std::string &);
+
 template <typename T>
 SearchResult<T> search(std::vector<T *> &, std::string (T::*)(void) const);
 
@@ -41,4 +45,6 @@ void getCorrectSearchIndex(std::vector<T *> &, SearchResult<T> &);
 SearchResult<Article> searchArticle(std::vector<Article *> &);
 SearchResult<Customer> searchCustomer(std::vector<Customer *> &);
 
+template <typename T, typename U>
+bool checkIfExists(std::vector<T *>, U, U (T::*)(void) const);
 } // namespace lib

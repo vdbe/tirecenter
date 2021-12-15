@@ -137,6 +137,7 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   std::cout << searchResult.item->getName() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
+  lib::trim(line);
   if (line != "") {
     searchResult.item->setName(line);
   }
@@ -145,6 +146,7 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   std::cout << searchResult.item->getManufacturer() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
+  lib::trim(line);
   if (line != "") {
     searchResult.item->setManufacturer(line);
   }
@@ -153,6 +155,7 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   std::cout << searchResult.item->getDiameter() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
+  lib::trim(line);
   if (line != "" && lib::stringIsInt(line)) {
     searchResult.item->setDiameter(std::stoi(line));
   }
@@ -179,6 +182,7 @@ void actionChangeArticle(std::vector<Article *> &articles) {
   std::cout << "Price: ";
   std::cout << searchResult.item->getPrice() << std::endl;
   std::cout << "new: ";
+  lib::trim(line);
   std::getline(std::cin, line);
   if (line != "" && lib::stringIsFloat(line)) {
     searchResult.item->setStock(std::stof(line));
@@ -291,6 +295,7 @@ void actionChangeCustomer(std::vector<Customer *> &customers) {
   std::cout << searchResult.item->getName() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
+  lib::trim(line);
   if (line != "") {
     searchResult.item->setName(line);
   }
@@ -299,6 +304,7 @@ void actionChangeCustomer(std::vector<Customer *> &customers) {
   std::cout << searchResult.item->getAddress() << std::endl;
   std::cout << "new: ";
   std::getline(std::cin, line);
+  lib::trim(line);
   if (line != "") {
     searchResult.item->setAddress(line);
   }
@@ -319,12 +325,14 @@ void actionChangeCustomer(std::vector<Customer *> &customers) {
 
     std::cout << "VAT: ";
     std::getline(std::cin, line);
+    lib::trim(line);
     if (line != "") {
       company->setVAT(line);
     }
 
     std::cout << "Volume discount: ";
     std::getline(std::cin, line);
+    lib::trim(line);
     if (line != "" && lib::stringIsInt(line)) {
       company->setVolumeDiscount(std::stoi(line));
     }
@@ -337,9 +345,15 @@ void actionAddCustomer(std::vector<Customer *> &customers) {
 
   std::cout << "Name: ";
   std::getline(std::cin, name);
+  lib::trim(name);
+  if (lib::checkIfExists(customers, name, &Customer::getName)) {
+    std::cout << "That customer already exists!!!" << std::endl;
+    return;
+  }
 
   std::cout << "Address: ";
   std::getline(std::cin, address);
+  lib::trim(address);
 
   std::cout << "Type: ";
   std::cin >> type;
@@ -351,6 +365,7 @@ void actionAddCustomer(std::vector<Customer *> &customers) {
 
     std::cout << "VAT: ";
     std::getline(std::cin, vat);
+    lib::trim(vat);
 
     std::cout << "Volume discount: ";
     std::cin >> volumeDiscount;
@@ -396,9 +411,15 @@ void actionAddArticle(std::vector<Article *> &articles) {
 
   std::cout << "Name: ";
   std::getline(std::cin, name);
+  lib::trim(name);
+  if (lib::checkIfExists(articles, name, &Article::getName)) {
+    std::cout << "That article already exists!!!" << std::endl;
+    return;
+  }
 
   std::cout << "Manufacturer: ";
   std::getline(std::cin, manufacturer);
+  lib::trim(manufacturer);
 
   std::cout << "Diameter: ";
   std::cin >> diameter;
@@ -442,6 +463,7 @@ void actionAddArticle(std::vector<Article *> &articles) {
 
     std::cout << "color: ";
     std::cin >> color;
+    lib::trim(color);
 
     std::cout << "width: ";
     std::cin >> width;
