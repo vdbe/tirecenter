@@ -267,10 +267,6 @@ void actionPlaceOrder(std::vector<Article *> &articles,
     }
   } while (c == 'y');
 
-  std::ofstream ofile{"plzword.tcdb", std::ios::out | std::ios::binary};
-  invoice->show();
-  tcdb::_::saveInvoice(invoice, ofile);
-  ofile.close();
   invoice->calculatePrice();
   invoice->calculateDiscount();
 
