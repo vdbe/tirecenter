@@ -351,7 +351,7 @@ void actionAddCustomer(std::vector<Customer *> &customers) {
   std::getline(std::cin, address);
   lib::trim(address);
 
-  std::cout << "Type: ";
+  std::cout << "Type (c: customer, b: company): ";
   std::cin >> type;
 
   if (type == 'b') {
@@ -420,7 +420,7 @@ void actionAddArticle(std::vector<Article *> &articles) {
   std::cout << "Diameter: ";
   std::cin >> diameter;
 
-  std::cout << "Type: ";
+  std::cout << "Type (t: tire, r: rim): ";
   std::cin >> type;
 
   std::cout << "Stock: ";
