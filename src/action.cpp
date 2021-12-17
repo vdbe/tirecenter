@@ -234,7 +234,7 @@ void actionPlaceOrder(std::vector<Article *> &articles,
       std::cout << "How many sets of 4 tires: ";
       break;
     case 'r':
-      std::cout << "Fow many sets of four rims: ";
+      std::cout << "Fow many sets of 4 rims: ";
       break;
     default:
       std::cout << "Amount: ";

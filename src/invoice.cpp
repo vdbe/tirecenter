@@ -108,4 +108,6 @@ void Invoice::show(void) const {
   for (Article *article : this->articles) {
     article->show();
   }
+  std::cout << "Total price (discount included): "
+            << this->getPrice() - this->getDiscount() << std::endl;
 }
