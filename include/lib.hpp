@@ -4,9 +4,7 @@
 #define DEFAULT_MAX_OPTIONS 8
 #endif
 
-#include <functional>
 #include <iostream>
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -42,6 +40,7 @@ void _draw_page(char **, size_t);
 template <typename T>
 void getCorrectSearchIndex(std::vector<T *> &, SearchResult<T> &);
 
+// No idea why it has to be here and not in lib.cpp
 SearchResult<Article> searchArticle(std::vector<Article *> &);
 SearchResult<Customer> searchCustomer(std::vector<Customer *> &);
 

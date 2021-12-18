@@ -2,10 +2,7 @@
 #include <vector>
 
 class Article;
-// TODO: Figure out why this does not work!
-// class Customer;
-
-#include "customer.hpp"
+class Customer;
 
 class Invoice {
 private:

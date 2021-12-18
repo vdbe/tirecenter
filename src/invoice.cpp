@@ -1,3 +1,5 @@
+#include "invoice.hpp"
+
 #include <iostream>
 #include <map>
 #include <vector>
@@ -5,7 +7,6 @@
 #include "article.hpp"
 #include "company.hpp"
 #include "customer.hpp"
-#include "invoice.hpp"
 
 Invoice::Invoice() {}
 Invoice::Invoice(Customer *customer, std::vector<Article *> articles,

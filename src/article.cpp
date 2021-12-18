@@ -1,7 +1,6 @@
 #include "article.hpp"
 
-#include <fstream>
-#include <iostream>
+//#include <iostream>
 
 Article::Article() {}
 Article::Article(std::string name, std::string manufacturer, int64_t stock,

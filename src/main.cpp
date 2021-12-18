@@ -1,7 +1,6 @@
 #include "main.hpp"
 
 #include "action.hpp"
-#include "article.hpp"
 #include "company.hpp"
 #include "rim.hpp"
 #include "tcdb.hpp"
@@ -37,7 +36,7 @@ int main(int argc, char **argv) {
       exit(0);
     }
   } else {
-    file = "test.tcdb";
+    file = "data.tcdb";
   }
 
   // Check if it already exists
@@ -48,7 +47,7 @@ int main(int argc, char **argv) {
   } else {
     tc.setName("Tire Center");
     tc.setAddress("The North Pole");
-    fill(&tc, 20);
+    // fill(&tc, 20);
   }
 
   action::Action action;

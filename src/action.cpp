@@ -417,33 +417,33 @@ void actionAddArticle(std::vector<Article *> &articles) {
   std::getline(std::cin, manufacturer);
   lib::trim(manufacturer);
 
-  std::cout << "Diameter: ";
-  std::cin >> diameter;
-
-  std::cout << "Type (t: tire, r: rim): ";
-  std::cin >> type;
-
   std::cout << "Stock: ";
   std::cin >> stock;
 
+  std::cout << "Diameter: ";
+  std::cin >> diameter;
+
   std::cout << "Price: ";
   std::cin >> price;
+
+  std::cout << "Type (t: tire, r: rim): ";
+  std::cin >> type;
 
   if (type == 't') {
     int64_t width, height;
     std::string speedIndex;
     char season;
 
-    std::cout << "Width";
+    std::cout << "Width: ";
     std::cin >> width;
 
-    std::cout << "Stock: ";
+    std::cout << "Weight: ";
     std::cin >> height;
 
     std::cout << "Speed index: ";
     std::cin >> speedIndex;
 
-    std::cout << "season: ";
+    std::cout << "Season: ";
     std::cin >> season;
 
     Tire *tire = new Tire(name, manufacturer, stock, diameter, price, type,
@@ -454,14 +454,14 @@ void actionAddArticle(std::vector<Article *> &articles) {
     std::string color;
     int64_t width;
 
-    std::cout << "Aluminium: ";
+    std::cout << "Aluminium [1/0]: ";
     std::cin >> aluminium;
 
-    std::cout << "color: ";
+    std::cout << "Color: ";
     std::cin >> color;
     lib::trim(color);
 
-    std::cout << "width: ";
+    std::cout << "Width: ";
     std::cin >> width;
 
     Rim *rim = new Rim(name, manufacturer, stock, diameter, price, type,

@@ -1,4 +1,3 @@
-#include <cstring>
 #include <iostream>
 #include <limits>
 #include <map>
@@ -9,10 +8,6 @@
 #include "article.hpp"
 #include "customer.hpp"
 #include "lib.hpp"
-#include <algorithm>
-#include <cctype>
-#include <locale>
-
 namespace lib {
 
 bool stringIsInt(const std::string &str) {

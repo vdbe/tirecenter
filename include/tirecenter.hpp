@@ -1,17 +1,11 @@
 #pragma once
 
 #include <string>
-#include <variant>
 #include <vector>
 
-// TODO: Figure out why this does not work
-// class Article;
-// class Customer;
-// class Invoice;
-
-#include "article.hpp"
-#include "customer.hpp"
-#include "invoice.hpp"
+class Article;
+class Customer;
+class Invoice;
 
 class TireCenter {
 private:

@@ -1,7 +1,6 @@
 #pragma once
 #include <fstream>
 #include <string>
-#include <vector>
 
 class Article {
 protected:
