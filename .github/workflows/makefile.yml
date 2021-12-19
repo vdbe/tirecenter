@@ -24,7 +24,7 @@ jobs:
         path: ${{ env.OBJ_DIR }}
         key: ${{ runner.os }}-${{ runner.arch }}-${{ env.COMPILER_VERSION }}
         restore-keys: |
-        ${{ runner.os }}-${{ runner.arch }}
+          ${{ runner.os }}-${{ runner.arch }}
 
     - name: Print env
       run: make info
