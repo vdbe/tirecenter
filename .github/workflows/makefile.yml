@@ -24,7 +24,7 @@ jobs:
         path: ${{ env.OBJ_DIR }}
         key: ${{ runner.os }}-${{ runner.arch }}-${{ env.COMPILER_VERSION }}-${{ hashFiles('Makefile', 'src/*.cpp', 'include/*.hpp') }}
         restore-keys: |
-          ${{ runner.os }}-${{ runner.arch }}-${{ env.COMPILER_VERSION }}
+          ${{ runner.os }}-${{ runner.arch }}-${{ env.COMPILER_VERSION }}-
 
     - name: Print env
       run: make info
