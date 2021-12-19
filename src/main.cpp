@@ -42,7 +42,9 @@ int main(int argc, char **argv) {
   // Check if it already exists
   // if so load it
   std::filesystem::path f{file};
+
   if (std::filesystem::exists(f)) {
+
     tcdb::load(tc, file);
   } else {
     tc.setName("Tire Center");
