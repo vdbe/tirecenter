@@ -30,8 +30,9 @@ jobs:
       run: make info
 
     - name: Print runner
-      run: echo ${{ runner.name }}
-      run: echo ${{ env.COMPILER_VERSION }}
+      run: |
+        echo ${{ runner.name }}
+        echo ${{ env.COMPILER_VERSION }}
 
     - name: Build program
       run: |
