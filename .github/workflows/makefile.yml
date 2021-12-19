@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OBJ_DIR: /tmp/obj
+      APP_DIR: /tmp/obj
 
     steps:
     - uses: actions/checkout@v2
