@@ -15,19 +15,23 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Cache objects
-      uses: actions/cache@v2
-      with:
-        path: ${{ env.OBJ_DIR }}
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-        ${{ runner.os }}-${{ runner.arch }}
+    - name: Get compiler version
+      run:  echo "COMPILER_VERSION=$(make compiler-version)" >> $GITHUB_ENV
+
+    #- name: Cache objects
+    #  uses: actions/cache@v2
+    #  with:
+    #    path: ${{ env.OBJ_DIR }}
+    #    key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/package-lock.json') }}
+    #    restore-keys: |
+    #    ${{ runner.os }}-${{ runner.arch }}
 
     - name: Print env
       run: make info
 
     - name: Print runner
       run: echo ${{ runner.name }}
+      run: echo ${{ env.COMPILER_VERSION }}
 
     - name: Build program
       run: |

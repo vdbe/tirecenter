@@ -42,7 +42,7 @@ $(APP_DIR)/$(TARGET): $(OBJECTS)
 
 -include $(DEPENDENCIES)
 
-.PHONY: all static clean debug release static docker info run gdb
+.PHONY: all static clean debug release static docker info run gdb compiler-version
 
 build:
 	@mkdir -p $(APP_DIR)
@@ -73,6 +73,9 @@ clean:
 	-@rm -rvf $(OBJ_DIR)/*
 	-@rm -rvf $(APP_DIR)/*
 
+compiler-version:
+	@echo -n "${CXX}-$(shell ${CXX} -dumpversion)"
+
 info:
 	@echo "[*] Linker flags:    ${LDFLAGS}     "
 	@echo "[*] Application dir: ${APP_DIR}     "
@@ -82,5 +85,5 @@ info:
 	@echo "[*] Dependencies:    ${DEPENDENCIES}"
 	@echo "[*] Compiler flags:  ${CXXFLAGS}    "
 	@echo "[*] Compiler:        ${CXX}         "
-	@echo "[*] Combiler version:               "
-	@${CXX} --version
+	@echo -n "[*] Combiler version: "
+	@${CXX} -dumpversion
