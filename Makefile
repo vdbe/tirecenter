@@ -23,8 +23,6 @@ TARGET   ?= tirecenter
 INCLUDE  ?= -Iinclude/
 SRC      ?=                      \
    $(wildcard src/*.cpp)         \
-   #$(wildcard src/module1/*.cpp) \
-   #$(wildcard src/module2/*.cpp) \
 
 OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 DEPENDENCIES := \
