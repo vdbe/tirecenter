@@ -2,20 +2,32 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ workflow ]
   pull_request:
-    branches: [ main ]
+    branches: [ workflow ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    env:
+      OBJ_DIR: /tmp/obj
+
+    - name: Cache objects
+      uses: actions/cache@v2
+      with:
+        path: ${{ env.OBJ_DIR }}
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+        ${{ runner.os }}-${{ runner.arch }}
 
     steps:
     - uses: actions/checkout@v2
 
     - name: Print env
       run: make info
+
+    - name: Print runner
+      run: echo ${{ runner.name }}
 
     - name: Build program
       run: |

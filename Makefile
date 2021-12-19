@@ -17,8 +17,8 @@ CXX      ?= g++
 CXXFLAGS += -std=c++2a -Wpedantic -Wall -Wextra #-Werror
 LDFLAGS  +=
 BUILD    ?= ./build
-OBJ_DIR  := $(BUILD)/objects
-APP_DIR  := $(BUILD)
+OBJ_DIR  ?= $(BUILD)/objects
+APP_DIR  ?= $(BUILD)
 TARGET   ?= tirecenter
 INCLUDE  ?= -Iinclude/
 SRC      ?=                      \
