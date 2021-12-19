@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
   } else {
     tc.setName("Tire Center");
     tc.setAddress("The North Pole");
-    // fill(&tc, 20);
+    fill(&tc, 20);
   }
 
   action::Action action;
