@@ -18,13 +18,13 @@ jobs:
     - name: Get compiler version
       run:  echo "COMPILER_VERSION=$(make compiler-version)" >> $GITHUB_ENV
 
-    #- name: Cache objects
-    #  uses: actions/cache@v2
-    #  with:
-    #    path: ${{ env.OBJ_DIR }}
-    #    key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/package-lock.json') }}
-    #    restore-keys: |
-    #    ${{ runner.os }}-${{ runner.arch }}
+    - name: Cache objects
+      uses: actions/cache@v2
+      with:
+        path: ${{ env.OBJ_DIR }}
+        key: ${{ runner.os }}-${{ runner.arch }}-${{ env.COMPILER_VERSION }}
+        restore-keys: |
+        ${{ runner.os }}-${{ runner.arch }}
 
     - name: Print env
       run: make info
