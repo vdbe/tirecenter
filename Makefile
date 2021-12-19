@@ -17,14 +17,12 @@ CXX      ?= g++
 CXXFLAGS += -std=c++2a -Wpedantic -Wall -Wextra #-Werror
 LDFLAGS  +=
 BUILD    ?= ./build
-OBJ_DIR  := $(BUILD)/objects
-APP_DIR  := $(BUILD)
+OBJ_DIR  ?= $(BUILD)/objects
+APP_DIR  ?= $(BUILD)
 TARGET   ?= tirecenter
 INCLUDE  ?= -Iinclude/
 SRC      ?=                      \
    $(wildcard src/*.cpp)         \
-   #$(wildcard src/module1/*.cpp) \
-   #$(wildcard src/module2/*.cpp) \
 
 OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 DEPENDENCIES := \
@@ -42,7 +40,7 @@ $(APP_DIR)/$(TARGET): $(OBJECTS)
 
 -include $(DEPENDENCIES)
 
-.PHONY: all static clean debug release static docker info run gdb
+.PHONY: all static clean debug release static docker info run gdb compiler-version
 
 build:
 	@mkdir -p $(APP_DIR)
@@ -73,14 +71,17 @@ clean:
 	-@rm -rvf $(OBJ_DIR)/*
 	-@rm -rvf $(APP_DIR)/*
 
+compiler-version:
+	@echo -n "${CXX}-$(shell ${CXX} -dumpversion)"
+
 info:
+	@echo "[*] Compiler:        ${CXX}         "
+	@echo -n "[*] Combiler version: "
+	@${CXX} -dumpversion
+	@echo "[*] Compiler flags:  ${CXXFLAGS}    "
 	@echo "[*] Linker flags:    ${LDFLAGS}     "
 	@echo "[*] Application dir: ${APP_DIR}     "
 	@echo "[*] Object dir:      ${OBJ_DIR}     "
 	@echo "[*] Sources:         ${SRC}         "
 	@echo "[*] Objects:         ${OBJECTS}     "
 	@echo "[*] Dependencies:    ${DEPENDENCIES}"
-	@echo "[*] Compiler flags:  ${CXXFLAGS}    "
-	@echo "[*] Compiler:        ${CXX}         "
-	@echo "[*] Combiler version:               "
-	@${CXX} --version
