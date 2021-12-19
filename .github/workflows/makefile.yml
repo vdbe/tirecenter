@@ -12,6 +12,9 @@ jobs:
     env:
       OBJ_DIR: /tmp/obj
 
+    steps:
+    - uses: actions/checkout@v2
+
     - name: Cache objects
       uses: actions/cache@v2
       with:
@@ -19,9 +22,6 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
         ${{ runner.os }}-${{ runner.arch }}
-
-    steps:
-    - uses: actions/checkout@v2
 
     - name: Print env
       run: make info
